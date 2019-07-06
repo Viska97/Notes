@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CocoaLumberjack
 
 public class FileNotebook {
     
@@ -16,10 +17,12 @@ public class FileNotebook {
     public func add(_ note: Note) {
         if let index = notes.firstIndex(where: { $0.uid == note.uid }) {
             //если заметка с таким uid уже существует, заменяем ее по индексу
+            DDLogDebug("Updated note with uid: \(note.uid))")
             notes[index] = note
         }
         else{
             //если не существует, просто добавляем
+            DDLogDebug("Added note with uid: \(note.uid))")
             notes.append(note)
         }
     }
@@ -27,6 +30,7 @@ public class FileNotebook {
     public func remove(with uid: String) {
         if let index = notes.firstIndex(where: { $0.uid == uid }) {
             //находим индекс заметки и удаляем ее по индексу
+            DDLogDebug("Removed note with uid: \(notes[index].uid))")
             notes.remove(at: index)
         }
     }
@@ -50,7 +54,7 @@ public class FileNotebook {
                 try data.write(to: fileUrl, options: [])
             }
             catch {
-                print("Exception while saving notes to file")
+                DDLogError("Exception while saving notes to file", level: logLevel)
             }
         }
     }
@@ -74,11 +78,11 @@ public class FileNotebook {
                     }
                 }
                 else {
-                    print("File not exists")
+                    DDLogWarn("File not exists", level: logLevel)
                 }
             }
             catch {
-                print("Exception while loading notes from file")
+                DDLogError("Exception while loading notes from file", level: logLevel)
             }
         }
     }

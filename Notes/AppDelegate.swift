@@ -61,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fileLogger.rollingFrequency = 60 * 60 * 24 // 24 hours
         fileLogger.logFileManager.maximumNumberOfLogFiles = 7
         DDLog.add(fileLogger)
+        DDLogInfo("Logging setted up", level: logLevel)
         DDLogDebug("Detail logging enabled", level: logLevel)
     }
     
