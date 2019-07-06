@@ -7,6 +7,17 @@
 
 import UIKit
 
+#if DEBUG
+let detailLogs = true
+let analytics = false
+#elseif QA
+let detailLogs = true
+let analytics = true
+#else
+let detailLogs = false
+let analytics = true
+#endif
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,6 +26,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        if(detailLogs) {
+            //BannerID и InterstitialID возможно в дальнейшем использовать для показа рекламы
+            print("Detail logging enabled")
+            if let GOOGLE_ADS = Bundle.main.infoDictionary?["GoogleAds"] as? Dictionary<String, String> {
+                print("Google Ads BannerID: " + GOOGLE_ADS["BannerID"]!)
+                print("Google Ads InterstitialID: " + GOOGLE_ADS["InterstitialID"]!)
+            }
+        }
+        if(analytics) {
+            //Возможная инциализация Mixpanel (средства аналитики
+            //if let MIXPANEL_TOKEN = Bundle.main.infoDictionary?["GoogleAds"] as? String {
+            //    Mixpanel.initialize(token: MIXPANEL_TOKEN)
+            //}
+        }
         return true
     }
 

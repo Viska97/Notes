@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>MixpanelToken</key>
+	<string>$(MIXPANEL_TOKEN)</string>
+	<key>GoogleAds</key>
+	<dict>
+		<key>InterstitialID</key>
+		<string>$(GOOGLE_ADS_INTERSTITIAL)</string>
+		<key>BannerID</key>
+		<string>$(GOOGLE_ADS_BANNER)</string>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
