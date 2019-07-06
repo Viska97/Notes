@@ -6,15 +6,16 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 #if DEBUG
-let detailLogs = true
+let logLevel = DDLogLevel.debug
 let analytics = false
 #elseif QA
-let detailLogs = true
+let logLevel = DDLogLevel.debug
 let analytics = true
 #else
-let detailLogs = false
+let logLevel = DDLogLevel.info
 let analytics = true
 #endif
 
@@ -26,20 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        if(detailLogs) {
-            //BannerID и InterstitialID возможно в дальнейшем использовать для показа рекламы
-            print("Detail logging enabled")
-            if let GOOGLE_ADS = Bundle.main.infoDictionary?["GoogleAds"] as? Dictionary<String, String> {
-                print("Google Ads BannerID: " + GOOGLE_ADS["BannerID"]!)
-                print("Google Ads InterstitialID: " + GOOGLE_ADS["InterstitialID"]!)
-            }
-        }
-        if(analytics) {
-            //Возможная инциализация Mixpanel (средства аналитики
-            //if let MIXPANEL_TOKEN = Bundle.main.infoDictionary?["GoogleAds"] as? String {
-            //    Mixpanel.initialize(token: MIXPANEL_TOKEN)
-            //}
-        }
+        setupLogging()
+        setupAnalytics()
+        logGoogleAds()
         return true
     }
 
@@ -63,6 +53,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func setupLogging() {
+        DDLog.add(DDOSLogger.sharedInstance) // Uses os_log
+        let fileLogger: DDFileLogger = DDFileLogger() // File Logger
+        fileLogger.rollingFrequency = 60 * 60 * 24 // 24 hours
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 7
+        DDLog.add(fileLogger)
+        DDLogDebug("Detail logging enabled", level: logLevel)
+    }
+    
+    func setupAnalytics() {
+        if(analytics) {
+            //Возможная инциализация Mixpanel (средства аналитики
+            //if let MIXPANEL_TOKEN = Bundle.main.infoDictionary?["GoogleAds"] as? String {
+            //    Mixpanel.initialize(token: MIXPANEL_TOKEN)
+            //}
+        }
+    }
+    
+    func logGoogleAds() {
+        //BannerID и InterstitialID возможно в дальнейшем использовать для показа рекламы
+        if let GOOGLE_ADS = Bundle.main.infoDictionary?["GoogleAds"]
+            as? Dictionary<String, String> {
+            let bannerID = GOOGLE_ADS["BannerID"] ?? ""
+            let interstitialID = GOOGLE_ADS["InterstitialID"] ?? ""
+            DDLogInfo("Google Ads BannerID: " + bannerID, level: logLevel)
+            DDLogInfo("Google Ads InterstitialID: " + interstitialID, level: logLevel)
+        }
     }
 
 
