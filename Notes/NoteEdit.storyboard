@@ -116,6 +116,7 @@
                         <outlet property="datePickerHeight" destination="cVV-Ih-elz" id="TtR-7j-tkG"/>
                         <outlet property="dateSwitch" destination="9xi-2Q-gK1" id="qWn-N2-XlZ"/>
                         <outlet property="scrollView" destination="Yfa-TM-9FN" id="AqY-PE-4t0"/>
+                        <outlet property="titleTextView" destination="ene-Lo-sBw" id="81Z-mo-trx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="253-vi-pGs" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -9,11 +9,15 @@ import UIKit
 
 class NoteEditViewController: UIViewController,UITextViewDelegate {
     
+    //плейсхолдер содержимого заметки
     let contentPlaceholder = "Enter note content"
+    //текущая высота клавиатуры
+    var keyboardHeight: CGFloat = 0.0
     
     @IBOutlet weak var datePickerHeight: NSLayoutConstraint!
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var titleTextView: UITextField!
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var dateSwitch: UISwitch!
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -22,6 +26,12 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     
     @IBAction func switchChanged(_ sender: UISwitch) {
         updateUI()
+        // если переключатель даты был включен плавно скроллим вниз до конца чтобы отобразить поле выбора даты полностью
+        if(dateSwitch.isOn) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.02, execute: {
+                self.scrollToEnd()
+            })
+        }
     }
     
     override func viewDidLoad() {
@@ -33,16 +43,18 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
         colorPicker.selectColorHandler = { [weak self] in
             self?.onColorSelected()
         }
-        updateUI()
+        updateUI(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
+        //подписка на события появления и убирания клавиатуры
         self.registerForKeyboardNotifications()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        //отписываемся от событий появления и убирания клавиатуры
         self.unregisterFromKeyboardNotifications()
     }
     
@@ -59,17 +71,21 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     }
     
     @objc func keyboardDidShow (_ notification: Notification) {
-        var userInfo = notification.userInfo!
-        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        var contentInset:UIEdgeInsets = self.scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height
-        scrollView.contentInset = contentInset
+        var userInfo = notification.userInfo
+        let keyboardFrame:CGRect? = (userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        if var keyboardFrame = keyboardFrame {
+            keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+            keyboardHeight = keyboardFrame.size.height
+        }
+        else {
+            keyboardHeight = 0.0
+        }
+        updateUI()
     }
     
     @objc func keyboardWillHide (_ notification: Notification) {
-        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-        scrollView.contentInset = contentInset
+        keyboardHeight = 0.0
+        updateUI()
     }
     
     internal func textViewDidBeginEditing(_ textView: UITextView) {
@@ -80,6 +96,10 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     }
     
     internal func textViewDidEndEditing(_ textView: UITextView) {
+        updateUI(true)
+    }
+    
+    internal func textViewDidChange(_ textView: UITextView) {
         updateUI()
     }
     
@@ -95,29 +115,54 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
         colorSelector.selectedColor = colorPicker.selectedColor
     }
     
-    private func updateUI() {
+    private func updateUI(_ updatePlaceholder: Bool = false) {
         datePicker.isHidden = !dateSwitch.isOn
+        //изменяем приоритет констрейнта высоты, чтобы скрывать и показывать поле выбора даты
         if (dateSwitch.isOn) {
             datePickerHeight.priority = UILayoutPriority(1)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
-                self.scrollToEnd()
-            })
         }
         else{
             datePickerHeight.priority = UILayoutPriority(999)
         }
-        if (contentTextView.text.isEmpty) {
-            contentTextView.text = contentPlaceholder
-            contentTextView.textColor = UIColor.lightGray
+        //логика обновления плейсхолдера для содержимого заметки
+        if(updatePlaceholder){
+            if (contentTextView.text.isEmpty) {
+                contentTextView.text = contentPlaceholder
+                contentTextView.textColor = UIColor.lightGray
+            }
+            else {
+                contentTextView.textColor = UIColor.black
+            }
         }
-        else {
-            contentTextView.textColor = UIColor.black
-        }
+        //через 0.01 т.к. высота поля выбора даты не обновляется моментально
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+            self.updateScrollViewInset()
+        })
     }
     
+    //метод для прокрутки в конец scroll view
     private func scrollToEnd() {
-        let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height)
+        let bottomOffset = CGPoint(x: 0, y: (scrollView.contentSize.height - scrollView.bounds.size.height) + keyboardHeight)
         scrollView.setContentOffset(bottomOffset, animated: true)
+    }
+    
+    //метод для обновления оступа снизу для scroll view (нужен, чтобы иметь возможность прокрутить scroll view полностью при наличии клавиатуры на экране
+    private func updateScrollViewInset() {
+        let contentHeight = titleTextView.bounds.height + contentTextView.bounds.height + dateSwitch.bounds.height + datePicker.bounds.height + colorSelector.bounds.height + CGFloat(40)
+        if (contentHeight > (colorPicker.bounds.height - keyboardHeight)){
+            var contentInset:UIEdgeInsets = self.scrollView.contentInset
+            if (contentHeight > colorPicker.bounds.height) {
+                contentInset.bottom = keyboardHeight
+            }
+            else {
+                contentInset.bottom = keyboardHeight - (colorPicker.bounds.height-contentHeight)
+            }
+            scrollView.contentInset = contentInset
+        }
+        else{
+            let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+            scrollView.contentInset = contentInset
+        }
     }
     
 }
