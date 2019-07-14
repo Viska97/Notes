@@ -26,12 +26,6 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     
     @IBAction func switchChanged(_ sender: UISwitch) {
         updateUI()
-        // если переключатель даты был включен плавно скроллим вниз до конца чтобы отобразить поле выбора даты полностью
-        if(dateSwitch.isOn) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.02, execute: {
-                self.scrollToEnd()
-            })
-        }
     }
     
     override func viewDidLoad() {
@@ -138,12 +132,6 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
             self.updateScrollViewInset()
         })
-    }
-    
-    //метод для прокрутки в конец scroll view
-    private func scrollToEnd() {
-        let bottomOffset = CGPoint(x: 0, y: (scrollView.contentSize.height - scrollView.bounds.size.height) + keyboardHeight)
-        scrollView.setContentOffset(bottomOffset, animated: true)
     }
     
     //метод для обновления оступа снизу для scroll view (нужен, чтобы иметь возможность прокрутить scroll view полностью при наличии клавиатуры на экране
