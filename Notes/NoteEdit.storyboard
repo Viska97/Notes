@@ -60,7 +60,7 @@
                                                     <!--2019-07-10 07:26:04 +0000-->
                                                 </date>
                                             </datePicker>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6cx-sK-fPe" customClass="ColorSelectorView" customModule="Notes" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="286" placeholderIntrinsicHeight="70" translatesAutoresizingMaskIntoConstraints="NO" id="6cx-sK-fPe" customClass="ColorSelectorView" customModule="Notes" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="259" width="286" height="70"/>
                                             </view>
                                         </subviews>

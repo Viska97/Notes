@@ -10,10 +10,10 @@ import UIKit
 @IBDesignable
 class ColorSelectorView : UIView {
     
-    private let width = 286
-    private let height = 70
-    private let itemSize = 70
-    private let itemSpacing = 3
+    private let width = 280
+    private let height = 68
+    private let itemSize = 68
+    private let itemSpacing = 4
     
     @IBInspectable var selectedColor: UIColor = .white {
         didSet {
