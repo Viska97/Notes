@@ -31,25 +31,28 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pc3-J8-pgT">
-                                                <rect key="frame" x="16" y="54" width="343" height="33"/>
+                                                <rect key="frame" x="16" y="54" width="343" height="150"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="xY2-Kg-N5u"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9xi-2Q-gK1">
-                                                <rect key="frame" x="163" y="95" width="51" height="31"/>
+                                                <rect key="frame" x="163" y="212" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="switchChanged:" destination="sdQ-cK-NKo" eventType="valueChanged" id="mYa-T4-Rl6"/>
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Destroy Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dq2-Cj-ZhQ">
-                                                <rect key="frame" x="16" y="100" width="139" height="21"/>
+                                                <rect key="frame" x="16" y="217" width="139" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="kAi-2k-0tB">
-                                                <rect key="frame" x="16" y="134" width="320" height="0.0"/>
+                                                <rect key="frame" x="16" y="251" width="320" height="0.0"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" priority="999" id="cVV-Ih-elz"/>
                                                 </constraints>
@@ -58,7 +61,7 @@
                                                 </date>
                                             </datePicker>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6cx-sK-fPe" customClass="ColorSelectorView" customModule="Notes" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="142" width="286" height="70"/>
+                                                <rect key="frame" x="16" y="259" width="286" height="70"/>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
