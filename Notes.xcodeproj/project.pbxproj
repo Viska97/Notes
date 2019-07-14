@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		740A530A7166356C852A3FB1 /* libPods-Notes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2968A166A8ACDDC72393BEB5 /* libPods-Notes.a */; };
 		9DA0670290084DBAD421D91D /* libPods-NotesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 911F4F902E5DD0435231DA37 /* libPods-NotesTests.a */; };
+		FE388D3422DA4E9300D9AA83 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE388D3322DA4E9300D9AA83 /* CGFloatExtension.swift */; };
+		FE397B4722DA07EA00063CAA /* ColorFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE397B4622DA07EA00063CAA /* ColorFieldView.swift */; };
 		FE6223DB22C3745100DA0A99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6223DA22C3745100DA0A99 /* AppDelegate.swift */; };
 		FE6223DD22C3745100DA0A99 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6223DC22C3745100DA0A99 /* ViewController.swift */; };
 		FE6223E022C3745100DA0A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE6223DE22C3745100DA0A99 /* Main.storyboard */; };
@@ -18,6 +20,12 @@
 		FE8300F422C4E0DD0026DDF3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8300F322C4E0DD0026DDF3 /* Note.swift */; };
 		FE8300F622C4E11A0026DDF3 /* NoteExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8300F522C4E11A0026DDF3 /* NoteExtension.swift */; };
 		FE8300FA22C4E16F0026DDF3 /* FileNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8300F922C4E16F0026DDF3 /* FileNotebook.swift */; };
+		FEA4006022D3DEF900488FA8 /* NoteEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEA4005F22D3DEF900488FA8 /* NoteEdit.storyboard */; };
+		FEA4006222D3E34C00488FA8 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA4006122D3E34C00488FA8 /* NoteEditViewController.swift */; };
+		FECDA43F22D5F52A0081BB4A /* ColorSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDA43E22D5F52A0081BB4A /* ColorSelectorView.swift */; };
+		FECDA44122D616700081BB4A /* ColorItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDA44022D616700081BB4A /* ColorItemView.swift */; };
+		FECDA44522D9C2560081BB4A /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDA44422D9C2560081BB4A /* ColorPickerView.swift */; };
+		FECDA44722D9E3870081BB4A /* SelectedColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDA44622D9E3870081BB4A /* SelectedColorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +47,8 @@
 		852E12BADF0973810FF4CCD3 /* Pods-NotesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotesTests.release.xcconfig"; path = "Target Support Files/Pods-NotesTests/Pods-NotesTests.release.xcconfig"; sourceTree = "<group>"; };
 		911F4F902E5DD0435231DA37 /* libPods-NotesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NotesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D956F4B80BB8ED8DCC268FA5 /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
+		FE388D3322DA4E9300D9AA83 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
+		FE397B4622DA07EA00063CAA /* ColorFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorFieldView.swift; sourceTree = "<group>"; };
 		FE6223D722C3745100DA0A99 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6223DA22C3745100DA0A99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE6223DC22C3745100DA0A99 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -52,6 +62,12 @@
 		FE8300F322C4E0DD0026DDF3 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		FE8300F522C4E11A0026DDF3 /* NoteExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteExtension.swift; sourceTree = "<group>"; };
 		FE8300F922C4E16F0026DDF3 /* FileNotebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNotebook.swift; sourceTree = "<group>"; };
+		FEA4005F22D3DEF900488FA8 /* NoteEdit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NoteEdit.storyboard; sourceTree = "<group>"; };
+		FEA4006122D3E34C00488FA8 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
+		FECDA43E22D5F52A0081BB4A /* ColorSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectorView.swift; sourceTree = "<group>"; };
+		FECDA44022D616700081BB4A /* ColorItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorItemView.swift; sourceTree = "<group>"; };
+		FECDA44422D9C2560081BB4A /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
+		FECDA44622D9E3870081BB4A /* SelectedColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedColorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +142,13 @@
 				FE6223E122C3745500DA0A99 /* Assets.xcassets */,
 				FE6223E322C3745500DA0A99 /* LaunchScreen.storyboard */,
 				FE6223E622C3745500DA0A99 /* Info.plist */,
+				FEA4005F22D3DEF900488FA8 /* NoteEdit.storyboard */,
+				FEA4006122D3E34C00488FA8 /* NoteEditViewController.swift */,
+				FECDA43E22D5F52A0081BB4A /* ColorSelectorView.swift */,
+				FECDA44022D616700081BB4A /* ColorItemView.swift */,
+				FECDA44422D9C2560081BB4A /* ColorPickerView.swift */,
+				FECDA44622D9E3870081BB4A /* SelectedColorView.swift */,
+				FE397B4622DA07EA00063CAA /* ColorFieldView.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -145,6 +168,7 @@
 				FE8300F322C4E0DD0026DDF3 /* Note.swift */,
 				FE8300F522C4E11A0026DDF3 /* NoteExtension.swift */,
 				FE8300F922C4E16F0026DDF3 /* FileNotebook.swift */,
+				FE388D3322DA4E9300D9AA83 /* CGFloatExtension.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -234,6 +258,7 @@
 			files = (
 				FE6223E522C3745500DA0A99 /* LaunchScreen.storyboard in Resources */,
 				FE6223E222C3745500DA0A99 /* Assets.xcassets in Resources */,
+				FEA4006022D3DEF900488FA8 /* NoteEdit.storyboard in Resources */,
 				FE6223E022C3745100DA0A99 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,11 +324,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEA4006222D3E34C00488FA8 /* NoteEditViewController.swift in Sources */,
 				FE8300FA22C4E16F0026DDF3 /* FileNotebook.swift in Sources */,
 				FE6223DD22C3745100DA0A99 /* ViewController.swift in Sources */,
 				FE8300F622C4E11A0026DDF3 /* NoteExtension.swift in Sources */,
 				FE6223DB22C3745100DA0A99 /* AppDelegate.swift in Sources */,
+				FECDA44522D9C2560081BB4A /* ColorPickerView.swift in Sources */,
 				FE8300F422C4E0DD0026DDF3 /* Note.swift in Sources */,
+				FECDA44722D9E3870081BB4A /* SelectedColorView.swift in Sources */,
+				FECDA43F22D5F52A0081BB4A /* ColorSelectorView.swift in Sources */,
+				FECDA44122D616700081BB4A /* ColorItemView.swift in Sources */,
+				FE388D3422DA4E9300D9AA83 /* CGFloatExtension.swift in Sources */,
+				FE397B4722DA07EA00063CAA /* ColorFieldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
