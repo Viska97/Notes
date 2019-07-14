@@ -95,7 +95,7 @@ class ColorFieldView: UIView {
         let rect = CGRect(origin: position, size: markRadius)
         let circlePath = UIBezierPath(ovalIn: rect)
         circlePath.lineWidth = CGFloat(1)
-        UIColor.clear.setFill()
+        selectedColor.setFill()
         UIColor.black.setStroke()
         circlePath.stroke()
         circlePath.fill()
