@@ -52,6 +52,7 @@ public class FileNotebook {
                 }
                 let data = try JSONSerialization.data(withJSONObject: json, options: [])
                 try data.write(to: fileUrl, options: [])
+                DDLogInfo("Notes saved to file", level: logLevel)
             }
             catch {
                 DDLogError("Exception while saving notes to file", level: logLevel)
@@ -75,10 +76,12 @@ public class FileNotebook {
                                 add(note)
                             }
                         }
+                        DDLogInfo("Notes loaded from file", level: logLevel)
                     }
                 }
                 else {
-                    DDLogWarn("File not exists", level: logLevel)
+                    notes = FileNotebook.defaultNotes()
+                    DDLogInfo("File not exists. Fill collection with initial notes", level: logLevel)
                 }
             }
             catch {
@@ -94,6 +97,16 @@ public class FileNotebook {
     private var directoryUrl : URL? {
         let cachesDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
         return cachesDirectory?.appendingPathComponent("Files")
+    }
+    
+    private static func defaultNotes() -> [Note] {
+        return [
+            Note(uid: "1", title: "Заголовок заметки", content: "Текст заметки, Текст заметки, Текст заметки, Текст заметки, Текст заметки", color: .red, importance: .normal, selfDestructDate: nil),
+            Note(uid: "2", title: "Короткая заметка", content: "Текст", color: .green, importance: .normal, selfDestructDate: nil),
+            Note(uid: "3", title: "Длинная заметка", content: "Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки", color: .blue, importance: .normal, selfDestructDate: nil),
+            Note(uid: "4", title: "3аголовок заметки - 2", content: "Текст заметки, Текст заметки, Текст заметки, Текст заметки, Текст заметки", color: .yellow, importance: .normal, selfDestructDate: nil),
+            Note(uid: "5", title: "Короткая заметка", content: "Не забыть выключить утюг", color: .cyan, importance: .normal, selfDestructDate: nil)
+        ]
     }
     
 }

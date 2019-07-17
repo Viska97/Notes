@@ -13,7 +13,6 @@ class ColorPickerView: UIView {
     private let largeMargin: CGFloat = 16
     private let smallMargin: CGFloat = 8
     
-    private var doneButton = UIButton()
     private var selectedColorView = SelectedColorView()
     private var brightnessSlider = UISlider()
     private var brightnessLabel = UILabel()
@@ -24,8 +23,6 @@ class ColorPickerView: UIView {
             updateUI()
         }
     }
-    
-    var selectColorHandler: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,14 +40,10 @@ class ColorPickerView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let buttonSize = doneButton.intrinsicContentSize
         let brightnessLabelSize = brightnessLabel.intrinsicContentSize
         let selectedColorWidth = brightnessLabel.intrinsicContentSize.height + brightnessSlider.intrinsicContentSize.height + largeMargin
         let selectedColorHeight = selectedColorWidth + selectedColorWidth/4
         let selectedColorSize = CGSize(width: selectedColorWidth, height: selectedColorHeight)
-        doneButton.frame = CGRect(
-            origin: CGPoint(x: bounds.midX - (buttonSize.width/2), y: bounds.maxY - buttonSize.height-8),
-            size: buttonSize)
         selectedColorView.frame = CGRect(
             origin: CGPoint(x: bounds.minX + largeMargin, y: bounds.minY + largeMargin),
             size: selectedColorSize)
@@ -61,12 +54,8 @@ class ColorPickerView: UIView {
             origin: CGPoint(x: selectedColorView.frame.maxX + largeMargin, y: brightnessSlider.frame.minY - brightnessLabelSize.height - smallMargin), size: brightnessLabelSize)
         colorField.frame = CGRect(
             origin: CGPoint(x: bounds.minX + largeMargin, y: selectedColorView.frame.maxY + smallMargin),
-            size: CGSize(width: bounds.width - largeMargin*2, height: doneButton.frame.minY-selectedColorView.frame.maxY-smallMargin*2))
+            size: CGSize(width: bounds.width - largeMargin*2, height: bounds.maxY-selectedColorView.frame.maxY-smallMargin*2))
         
-    }
-    
-    @objc private func doneButtonTapped() {
-        selectColorHandler?()
     }
     
     @objc private func brightnessValueChanged() {
@@ -80,13 +69,8 @@ class ColorPickerView: UIView {
     private func setupViews() {
         addSubview(selectedColorView)
         addSubview(brightnessSlider)
-        addSubview(doneButton)
         addSubview(brightnessLabel)
         addSubview(colorField)
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.setTitleColor(doneButton.tintColor, for: .normal)
-        doneButton.setTitle("Done", for: .normal)
-        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         brightnessSlider.value = 1.0
         brightnessSlider.addTarget(self, action: #selector(brightnessValueChanged), for:.valueChanged)
         brightnessLabel.text = "Brightness:"

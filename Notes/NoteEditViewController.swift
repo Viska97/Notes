@@ -9,10 +9,15 @@ import UIKit
 
 class NoteEditViewController: UIViewController,UITextViewDelegate {
     
+    var fileNotebook: FileNotebook? = nil
+    var note: Note? = nil
+    
     //плейсхолдер содержимого заметки
-    let contentPlaceholder = "Enter note content"
+    private let contentPlaceholder = "Enter note content"
     //текущая высота клавиатуры
-    var keyboardHeight: CGFloat = 0.0
+    private var keyboardHeight: CGFloat = 0.0
+    
+    private var doneButton: UIBarButtonItem?
     
     @IBOutlet weak var datePickerHeight: NSLayoutConstraint!
     
@@ -22,34 +27,65 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     @IBOutlet weak var dateSwitch: UISwitch!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var colorSelector: ColorSelectorView!
-    @IBOutlet weak var colorPicker: ColorPickerView!
     
     @IBAction func switchChanged(_ sender: UISwitch) {
         updateUI()
     }
+    @IBAction func dateChanged() {
+        updateUI()
+    }
+    @IBAction func titleChanged() {
+        updateUI()
+    }
+    
+    @IBAction func unwindToEditNote(segue: UIStoryboardSegue) {}
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
+        doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(save))
+        navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.rightBarButtonItem = doneButton
+        tabBarController?.tabBar.isHidden = true
         contentTextView.delegate = self
         colorSelector.requestColorHandler = { [weak self] in
             self?.onColorRequested()
         }
-        colorPicker.selectColorHandler = { [weak self] in
-            self?.onColorSelected()
+        colorSelector.selectedColorHandler = { [weak self] in
+            self?.updateUI()
+        }
+        titleTextView.text = note?.title ?? ""
+        contentTextView.text = note?.content ?? ""
+        colorSelector.selectedColor = note?.color ?? .white
+        if let date = note?.selfDestructDate {
+            dateSwitch.isOn = true
+            datePicker.date = date
+        }
+        if (note?.title != "" && note?.content != "") {
+            title = "Редактирование заметки"
         }
         updateUI(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated);
+        super.viewWillAppear(animated) 
         //подписка на события появления и убирания клавиатуры
         self.registerForKeyboardNotifications()
+        updateUI()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //отписываемся от событий появления и убирания клавиатуры
         self.unregisterFromKeyboardNotifications()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let colorPickerViewController = segue.destination as? ColorPickerViewController,
+            segue.identifier == "ShowColorPickerScreen",
+            let color = colorSelector.fourthColor {
+            colorPickerViewController.selectedColor = color
+        }
     }
     
     private func registerForKeyboardNotifications() {
@@ -98,15 +134,26 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     }
     
     private func onColorRequested() {
-        if let color = colorSelector.fourthColor {
-            colorPicker.updateColor(color)
-        }
-        colorPicker.isHidden = false
+        performSegue(withIdentifier: "ShowColorPickerScreen", sender: nil)
     }
     
-    private func onColorSelected() {
-        colorPicker.isHidden = true
-        colorSelector.selectedColor = colorPicker.selectedColor
+    @objc func cancel() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func save() {
+        print("saving")
+        if let uid = note?.uid, let title = titleTextView.text, let content = contentTextView.text {
+            let updatedNote = Note(uid: uid,
+                                   title: title,
+                                   content: content,
+                                   color: colorSelector.selectedColor,
+                                   importance: .normal,
+                                   selfDestructDate: date)
+            fileNotebook?.add(updatedNote)
+            print("updated")
+        }
+        navigationController?.popViewController(animated: true)
     }
     
     private func updateUI(_ updatePlaceholder: Bool = false) {
@@ -128,6 +175,7 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
                 contentTextView.textColor = UIColor.black
             }
         }
+        doneButton?.isEnabled = saveAvailable
         //через 0.01 т.к. высота поля выбора даты не обновляется моментально
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
             self.updateScrollViewInset()
@@ -136,14 +184,14 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     
     //метод для обновления оступа снизу для scroll view (нужен, чтобы иметь возможность прокрутить scroll view полностью при наличии клавиатуры на экране
     private func updateScrollViewInset() {
-        let contentHeight = titleTextView.bounds.height + contentTextView.bounds.height + dateSwitch.bounds.height + datePicker.bounds.height + colorSelector.bounds.height + CGFloat(40)
-        if (contentHeight > (colorPicker.bounds.height - keyboardHeight)){
+        let contentHeight = colorSelector.frame.maxY
+        if (contentHeight > (scrollView.frame.height - keyboardHeight)){
             var contentInset:UIEdgeInsets = self.scrollView.contentInset
-            if (contentHeight > colorPicker.bounds.height) {
+            if (contentHeight > scrollView.frame.height) {
                 contentInset.bottom = keyboardHeight
             }
             else {
-                contentInset.bottom = keyboardHeight - (colorPicker.bounds.height-contentHeight)
+                contentInset.bottom = keyboardHeight - (scrollView.frame.height-contentHeight)
             }
             scrollView.contentInset = contentInset
         }
@@ -151,6 +199,31 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
             let contentInset:UIEdgeInsets = UIEdgeInsets.zero
             scrollView.contentInset = contentInset
         }
+    }
+    
+}
+
+extension NoteEditViewController {
+    
+    var date: Date? {
+        guard( dateSwitch.isOn) else {return nil}
+        return datePicker.date
+    }
+    
+    var contentIsEmpty: Bool {
+        guard (contentTextView.textColor != UIColor.lightGray) else {return true}
+        return contentTextView.text == ""
+    }
+    
+    var saveAvailable: Bool {
+        guard (titleTextView.text != "" && !contentIsEmpty) else {return false}
+        if (titleTextView.text == note?.title &&
+            contentTextView.text == note?.content &&
+            colorSelector.selectedColor == note?.color &&
+            date?.timeIntervalSinceReferenceDate == note?.selfDestructDate?.timeIntervalSinceReferenceDate) {
+            return false
+        }
+        else {return true}
     }
     
 }

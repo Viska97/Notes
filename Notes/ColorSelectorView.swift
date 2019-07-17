@@ -43,6 +43,7 @@ class ColorSelectorView : UIView {
     }
     
     var requestColorHandler: (() -> Void)?
+    var selectedColorHandler: (() -> Void)?
     
     private var views = [ColorItemView]()
     
@@ -82,6 +83,7 @@ class ColorSelectorView : UIView {
         if let view = view {
             if let color = view.itemColor {
                 selectedColor = color
+                selectedColorHandler?()
             } else {
                 requestColorHandler?()
             }
