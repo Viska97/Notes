@@ -11,6 +11,7 @@ import CocoaLumberjack
 public class FileNotebook {
     
     public private(set) var notes = [Note]()
+    public private(set) var imageNotes = [ImageNote]()
     
     public init(){}
     
@@ -27,6 +28,19 @@ public class FileNotebook {
         }
     }
     
+    public func add(_ imageNote: ImageNote) {
+        if let index = imageNotes.firstIndex(where: { $0.uid == imageNote.uid }) {
+            //если заметка с таким uid уже существует, заменяем ее по индексу
+            DDLogDebug("Updated image note with uid: \(imageNote.uid))")
+            imageNotes[index] = imageNote
+        }
+        else{
+            //если не существует, просто добавляем
+            DDLogDebug("Added image note with uid: \(imageNote.uid))")
+            imageNotes.append(imageNote)
+        }
+    }
+    
     public func remove(with uid: String) {
         if let index = notes.firstIndex(where: { $0.uid == uid }) {
             //находим индекс заметки и удаляем ее по индексу
@@ -35,11 +49,23 @@ public class FileNotebook {
         }
     }
     
+    public func removeImageNote(with uid: String) {
+        if let index = imageNotes.firstIndex(where: { $0.uid == uid }) {
+            //находим индекс заметки и удаляем ее по индексу
+            DDLogDebug("Removed image note with uid: \(imageNotes[index].uid))")
+            imageNotes.remove(at: index)
+        }
+    }
+    
     public func saveToFile() {
         if let directoryUrl = directoryUrl {
             let fileUrl = directoryUrl.appendingPathComponent(fileName)
             var json = [Dictionary<String, Any>]()
             for note in notes {
+                let dict = note.json
+                json.append(dict)
+            }
+            for note in imageNotes {
                 let dict = note.json
                 json.append(dict)
             }
@@ -71,8 +97,13 @@ public class FileNotebook {
                         // в требованиях не прописано, следует ли удалять текущие записки(если они есть) перед загрузкой из файла
                         // условимся, что нужно удалять, поэтому пропишем notes.removeAll()
                         notes.removeAll()
+                        imageNotes.removeAll()
                         for item in json {
+                            DDLogInfo("Item", level: logLevel)
                             if let note = Note.parse(json: item) {
+                                add(note)
+                            }
+                            else if let note = ImageNote.parse(json: item){
                                 add(note)
                             }
                         }
@@ -81,6 +112,7 @@ public class FileNotebook {
                 }
                 else {
                     notes = FileNotebook.defaultNotes()
+                    imageNotes = FileNotebook.defaultImageNotes()
                     DDLogInfo("File not exists. Fill collection with initial notes", level: logLevel)
                 }
             }
@@ -101,11 +133,27 @@ public class FileNotebook {
     
     private static func defaultNotes() -> [Note] {
         return [
-            Note(uid: "1", title: "Заголовок заметки", content: "Текст заметки, Текст заметки, Текст заметки, Текст заметки, Текст заметки", color: .red, importance: .normal, selfDestructDate: nil),
-            Note(uid: "2", title: "Короткая заметка", content: "Текст", color: .green, importance: .normal, selfDestructDate: nil),
-            Note(uid: "3", title: "Длинная заметка", content: "Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки", color: .blue, importance: .normal, selfDestructDate: nil),
-            Note(uid: "4", title: "3аголовок заметки - 2", content: "Текст заметки, Текст заметки, Текст заметки, Текст заметки, Текст заметки", color: .yellow, importance: .normal, selfDestructDate: nil),
-            Note(uid: "5", title: "Короткая заметка", content: "Не забыть выключить утюг", color: .cyan, importance: .normal, selfDestructDate: nil)
+            Note(title: "Заголовок заметки", content: "Текст заметки, Текст заметки, Текст заметки, Текст заметки, Текст заметки", color: .red, importance: .normal, selfDestructDate: nil),
+            Note(title: "Короткая заметка", content: "Текст", color: .green, importance: .normal, selfDestructDate: nil),
+            Note(title: "Длинная заметка", content: "Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки, Длинный текст заметки", color: .blue, importance: .normal, selfDestructDate: nil),
+            Note(title: "3аголовок заметки - 2", content: "Текст заметки, Текст заметки, Текст заметки, Текст заметки, Текст заметки", color: .yellow, importance: .normal, selfDestructDate: nil),
+            Note(title: "Короткая заметка", content: "Не забыть выключить утюг", color: .cyan, importance: .normal, selfDestructDate: nil)
+        ]
+    }
+    
+    private static func defaultImageNotes() -> [ImageNote] {
+        return [
+            ImageNote(name: "Sunrise.png", isDefault: true),
+            ImageNote(name: "SunriseOverMountains.png", isDefault: true),
+            ImageNote(name: "Sparkler.png", isDefault: true),
+            ImageNote(name: "Fireworks.png", isDefault: true),
+            ImageNote(name: "Sunset.png", isDefault: true),
+            ImageNote(name: "CityscapeAtDusk.png", isDefault: true),
+            ImageNote(name: "Cityscape.png", isDefault: true),
+            ImageNote(name: "NightWithStars.png", isDefault: true),
+            ImageNote(name: "MilkyWay.png", isDefault: true),
+            ImageNote(name: "BridgeAtNight.png", isDefault: true),
+            ImageNote(name: "Foggy.png", isDefault: true)
         ]
     }
     

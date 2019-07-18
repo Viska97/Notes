@@ -47,18 +47,74 @@
         <!--Галерея-->
         <scene sceneID="dEG-d3-bfv">
             <objects>
-                <viewController id="lGE-Ob-d5O" sceneMemberID="viewController">
+                <viewController id="lGE-Ob-d5O" customClass="GalleryViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2vw-Wj-fWl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bae-2O-OIH">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LzJ-co-TSr">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="lGE-Ob-d5O" id="F0Z-aU-5tk"/>
+                                    <outlet property="delegate" destination="lGE-Ob-d5O" id="n8p-7a-Cno"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="bae-2O-OIH" firstAttribute="leading" secondItem="svw-0F-H2g" secondAttribute="leading" id="dNJ-3U-gPH"/>
+                            <constraint firstItem="bae-2O-OIH" firstAttribute="top" secondItem="svw-0F-H2g" secondAttribute="top" id="ieS-dv-sMU"/>
+                            <constraint firstItem="svw-0F-H2g" firstAttribute="bottom" secondItem="bae-2O-OIH" secondAttribute="bottom" id="jcL-Za-9P7"/>
+                            <constraint firstItem="svw-0F-H2g" firstAttribute="trailing" secondItem="bae-2O-OIH" secondAttribute="trailing" id="tbp-eL-rvp"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="svw-0F-H2g"/>
                     </view>
                     <navigationItem key="navigationItem" title="Галерея" id="Xkv-tm-z6v"/>
+                    <connections>
+                        <outlet property="imageNotesCollection" destination="bae-2O-OIH" id="hyT-1U-bab"/>
+                        <segue destination="4BK-LZ-hLl" kind="show" identifier="ShowImageNoteScreen" id="nkY-jd-u5C"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yGt-LJ-yc7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2717" y="384"/>
+        </scene>
+        <!--Image Note View Controller-->
+        <scene sceneID="aQR-4j-6hF">
+            <objects>
+                <viewController id="4BK-LZ-hLl" customClass="ImageNoteViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Lg0-fl-Cbs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BsZ-jb-r9Q">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="BsZ-jb-r9Q" firstAttribute="top" secondItem="6zH-AQ-t55" secondAttribute="top" id="Fc0-4C-gBD"/>
+                            <constraint firstItem="BsZ-jb-r9Q" firstAttribute="leading" secondItem="6zH-AQ-t55" secondAttribute="leading" id="Jc6-MC-dTk"/>
+                            <constraint firstItem="6zH-AQ-t55" firstAttribute="trailing" secondItem="BsZ-jb-r9Q" secondAttribute="trailing" id="e78-88-Ku9"/>
+                            <constraint firstItem="6zH-AQ-t55" firstAttribute="bottom" secondItem="BsZ-jb-r9Q" secondAttribute="bottom" id="nCY-0B-1SG"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6zH-AQ-t55"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageNoteSlider" destination="BsZ-jb-r9Q" id="jBJ-r8-x33"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JxC-mR-Dma" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3567" y="384"/>
         </scene>
         <!--Заметки-->
         <scene sceneID="vrG-hR-Ot5">

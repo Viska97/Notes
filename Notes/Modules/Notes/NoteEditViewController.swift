@@ -142,7 +142,6 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     }
     
     @objc func save() {
-        print("saving")
         if let uid = note?.uid, let title = titleTextView.text, let content = contentTextView.text {
             let updatedNote = Note(uid: uid,
                                    title: title,
@@ -151,7 +150,6 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
                                    importance: .normal,
                                    selfDestructDate: date)
             fileNotebook?.add(updatedNote)
-            print("updated")
         }
         navigationController?.popViewController(animated: true)
     }
