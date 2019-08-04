@@ -18,25 +18,31 @@ public class FileNotebook {
     public func add(_ note: Note) {
         if let index = notes.firstIndex(where: { $0.uid == note.uid }) {
             //если заметка с таким uid уже существует, заменяем ее по индексу
-            DDLogDebug("Updated note with uid: \(note.uid))")
+            DDLogDebug("Updated note with uid: \(note.uid)")
             notes[index] = note
         }
         else{
             //если не существует, просто добавляем
-            DDLogDebug("Added note with uid: \(note.uid))")
+            DDLogDebug("Added note with uid: \(note.uid)")
             notes.append(note)
+        }
+    }
+    
+    public func addAll(_ notes: [Note]) {
+        for note in notes {
+            add(note)
         }
     }
     
     public func add(_ imageNote: ImageNote) {
         if let index = imageNotes.firstIndex(where: { $0.uid == imageNote.uid }) {
             //если заметка с таким uid уже существует, заменяем ее по индексу
-            DDLogDebug("Updated image note with uid: \(imageNote.uid))")
+            DDLogDebug("Updated image note with uid: \(imageNote.uid)")
             imageNotes[index] = imageNote
         }
         else{
             //если не существует, просто добавляем
-            DDLogDebug("Added image note with uid: \(imageNote.uid))")
+            DDLogDebug("Added image note with uid: \(imageNote.uid)")
             imageNotes.append(imageNote)
         }
     }
@@ -44,7 +50,7 @@ public class FileNotebook {
     public func remove(with uid: String) {
         if let index = notes.firstIndex(where: { $0.uid == uid }) {
             //находим индекс заметки и удаляем ее по индексу
-            DDLogDebug("Removed note with uid: \(notes[index].uid))")
+            DDLogDebug("Removed note with uid: \(notes[index].uid)")
             notes.remove(at: index)
         }
     }
@@ -52,7 +58,7 @@ public class FileNotebook {
     public func removeImageNote(with uid: String) {
         if let index = imageNotes.firstIndex(where: { $0.uid == uid }) {
             //находим индекс заметки и удаляем ее по индексу
-            DDLogDebug("Removed image note with uid: \(imageNotes[index].uid))")
+            DDLogDebug("Removed image note with uid: \(imageNotes[index].uid)")
             imageNotes.remove(at: index)
         }
     }

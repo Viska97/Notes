@@ -23,6 +23,17 @@
 		FE8300F422C4E0DD0026DDF3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8300F322C4E0DD0026DDF3 /* Note.swift */; };
 		FE8300F622C4E11A0026DDF3 /* NoteExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8300F522C4E11A0026DDF3 /* NoteExtension.swift */; };
 		FE8300FA22C4E16F0026DDF3 /* FileNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8300F922C4E16F0026DDF3 /* FileNotebook.swift */; };
+		FE9C076E22F618B90060DF38 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C076D22F618B90060DF38 /* AsyncOperation.swift */; };
+		FE9C077122F619480060DF38 /* BaseBackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C077022F619480060DF38 /* BaseBackendOperation.swift */; };
+		FE9C077322F619B50060DF38 /* SaveNotesBackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C077222F619B50060DF38 /* SaveNotesBackendOperation.swift */; };
+		FE9C077722F61A180060DF38 /* BaseDBOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C077622F61A180060DF38 /* BaseDBOperation.swift */; };
+		FE9C077922F61BA30060DF38 /* SaveNoteDBOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C077822F61BA30060DF38 /* SaveNoteDBOperation.swift */; };
+		FE9C077B22F61BFC0060DF38 /* LoadNotesBackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C077A22F61BFC0060DF38 /* LoadNotesBackendOperation.swift */; };
+		FE9C077D22F61CE90060DF38 /* LoadNotesDBOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C077C22F61CE90060DF38 /* LoadNotesDBOperation.swift */; };
+		FE9C077F22F61D9D0060DF38 /* RemoveNoteDBOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C077E22F61D9D0060DF38 /* RemoveNoteDBOperation.swift */; };
+		FE9C078122F61E0C0060DF38 /* SaveNoteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C078022F61E0C0060DF38 /* SaveNoteOperation.swift */; };
+		FE9C078322F61EFB0060DF38 /* LoadNotesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C078222F61EFB0060DF38 /* LoadNotesOperation.swift */; };
+		FE9C078522F6252B0060DF38 /* RemoveNoteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C078422F6252B0060DF38 /* RemoveNoteOperation.swift */; };
 		FEA4006222D3E34C00488FA8 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA4006122D3E34C00488FA8 /* NoteEditViewController.swift */; };
 		FECDA43F22D5F52A0081BB4A /* ColorSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDA43E22D5F52A0081BB4A /* ColorSelectorView.swift */; };
 		FECDA44122D616700081BB4A /* ColorItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDA44022D616700081BB4A /* ColorItemView.swift */; };
@@ -73,6 +84,17 @@
 		FE8300F322C4E0DD0026DDF3 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		FE8300F522C4E11A0026DDF3 /* NoteExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteExtension.swift; sourceTree = "<group>"; };
 		FE8300F922C4E16F0026DDF3 /* FileNotebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNotebook.swift; sourceTree = "<group>"; };
+		FE9C076D22F618B90060DF38 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
+		FE9C077022F619480060DF38 /* BaseBackendOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseBackendOperation.swift; sourceTree = "<group>"; };
+		FE9C077222F619B50060DF38 /* SaveNotesBackendOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveNotesBackendOperation.swift; sourceTree = "<group>"; };
+		FE9C077622F61A180060DF38 /* BaseDBOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDBOperation.swift; sourceTree = "<group>"; };
+		FE9C077822F61BA30060DF38 /* SaveNoteDBOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveNoteDBOperation.swift; sourceTree = "<group>"; };
+		FE9C077A22F61BFC0060DF38 /* LoadNotesBackendOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotesBackendOperation.swift; sourceTree = "<group>"; };
+		FE9C077C22F61CE90060DF38 /* LoadNotesDBOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotesDBOperation.swift; sourceTree = "<group>"; };
+		FE9C077E22F61D9D0060DF38 /* RemoveNoteDBOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNoteDBOperation.swift; sourceTree = "<group>"; };
+		FE9C078022F61E0C0060DF38 /* SaveNoteOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveNoteOperation.swift; sourceTree = "<group>"; };
+		FE9C078222F61EFB0060DF38 /* LoadNotesOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotesOperation.swift; sourceTree = "<group>"; };
+		FE9C078422F6252B0060DF38 /* RemoveNoteOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNoteOperation.swift; sourceTree = "<group>"; };
 		FEA4006122D3E34C00488FA8 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
 		FECDA43E22D5F52A0081BB4A /* ColorSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectorView.swift; sourceTree = "<group>"; };
 		FECDA44022D616700081BB4A /* ColorItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorItemView.swift; sourceTree = "<group>"; };
@@ -151,6 +173,7 @@
 		FE6223D922C3745100DA0A99 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				FE9C076C22F617D10060DF38 /* Operations */,
 				FED32FFE22E0CB83001D47D2 /* Components */,
 				FED3300222E0CC0B001D47D2 /* Modules */,
 				FE8300F222C4E0C90026DDF3 /* Model */,
@@ -182,6 +205,40 @@
 				FED32FF022DF88A2001D47D2 /* ImageNote.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FE9C076C22F617D10060DF38 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				FE9C077522F61A060060DF38 /* DBOperations */,
+				FE9C076F22F619330060DF38 /* BackendOperations */,
+				FE9C076D22F618B90060DF38 /* AsyncOperation.swift */,
+				FE9C078022F61E0C0060DF38 /* SaveNoteOperation.swift */,
+				FE9C078222F61EFB0060DF38 /* LoadNotesOperation.swift */,
+				FE9C078422F6252B0060DF38 /* RemoveNoteOperation.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		FE9C076F22F619330060DF38 /* BackendOperations */ = {
+			isa = PBXGroup;
+			children = (
+				FE9C077022F619480060DF38 /* BaseBackendOperation.swift */,
+				FE9C077222F619B50060DF38 /* SaveNotesBackendOperation.swift */,
+				FE9C077A22F61BFC0060DF38 /* LoadNotesBackendOperation.swift */,
+			);
+			path = BackendOperations;
+			sourceTree = "<group>";
+		};
+		FE9C077522F61A060060DF38 /* DBOperations */ = {
+			isa = PBXGroup;
+			children = (
+				FE9C077622F61A180060DF38 /* BaseDBOperation.swift */,
+				FE9C077822F61BA30060DF38 /* SaveNoteDBOperation.swift */,
+				FE9C077C22F61CE90060DF38 /* LoadNotesDBOperation.swift */,
+				FE9C077E22F61D9D0060DF38 /* RemoveNoteDBOperation.swift */,
+			);
+			path = DBOperations;
 			sourceTree = "<group>";
 		};
 		FED32FFE22E0CB83001D47D2 /* Components */ = {
@@ -407,22 +464,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				FED32FF622DF8ED3001D47D2 /* NoteCollectionViewCell.swift in Sources */,
+				FE9C077122F619480060DF38 /* BaseBackendOperation.swift in Sources */,
 				FEA4006222D3E34C00488FA8 /* NoteEditViewController.swift in Sources */,
 				FED32FF322DF8C5F001D47D2 /* GalleryViewController.swift in Sources */,
+				FE9C076E22F618B90060DF38 /* AsyncOperation.swift in Sources */,
+				FE9C077F22F61D9D0060DF38 /* RemoveNoteDBOperation.swift in Sources */,
+				FE9C078122F61E0C0060DF38 /* SaveNoteOperation.swift in Sources */,
 				FE8300FA22C4E16F0026DDF3 /* FileNotebook.swift in Sources */,
 				FED32FF122DF88A2001D47D2 /* ImageNote.swift in Sources */,
+				FE9C077D22F61CE90060DF38 /* LoadNotesDBOperation.swift in Sources */,
+				FE9C077322F619B50060DF38 /* SaveNotesBackendOperation.swift in Sources */,
 				FE8300F622C4E11A0026DDF3 /* NoteExtension.swift in Sources */,
 				FE6223DB22C3745100DA0A99 /* AppDelegate.swift in Sources */,
 				FECDA44522D9C2560081BB4A /* ColorPickerView.swift in Sources */,
 				FE8300F422C4E0DD0026DDF3 /* Note.swift in Sources */,
+				FE9C077B22F61BFC0060DF38 /* LoadNotesBackendOperation.swift in Sources */,
 				FE74EBA122DDCB4E0081FE7F /* NotesViewController.swift in Sources */,
+				FE9C078322F61EFB0060DF38 /* LoadNotesOperation.swift in Sources */,
 				FE31FEFE22DE72E90026D334 /* NoteTableViewCell.swift in Sources */,
 				FECDA44722D9E3870081BB4A /* SelectedColorView.swift in Sources */,
+				FE9C078522F6252B0060DF38 /* RemoveNoteOperation.swift in Sources */,
 				FED32FFD22E05C57001D47D2 /* ImageNoteViewController.swift in Sources */,
 				FECDA43F22D5F52A0081BB4A /* ColorSelectorView.swift in Sources */,
 				FE74EBA322DDD4040081FE7F /* ColorPickerViewController.swift in Sources */,
+				FE9C077922F61BA30060DF38 /* SaveNoteDBOperation.swift in Sources */,
 				FECDA44122D616700081BB4A /* ColorItemView.swift in Sources */,
 				FE388D3422DA4E9300D9AA83 /* CGFloatExtension.swift in Sources */,
+				FE9C077722F61A180060DF38 /* BaseDBOperation.swift in Sources */,
 				FE397B4722DA07EA00063CAA /* ColorFieldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

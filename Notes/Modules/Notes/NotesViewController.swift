@@ -6,10 +6,16 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class NotesViewController: UIViewController {
     
+    private let backendQueue = OperationQueue()
+    private let dbQueue = OperationQueue()
+    private let commonQueue = OperationQueue()
+    
     private let fileNotebook = (UIApplication.shared.delegate as! AppDelegate).fileNotebook
+    private var notes: [Note]? = nil
     
     @IBOutlet weak var notesTable: UITableView!
     
@@ -27,7 +33,7 @@ class NotesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        notesTable.reloadData()
+        loadNotes()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -50,6 +56,44 @@ class NotesViewController: UIViewController {
     @objc func addNote() {
         performSegue(withIdentifier: "ShowNoteEditScreen", sender: nil)
     }
+    
+    private func loadNotes() {
+        let loadNotesOperation = LoadNotesOperation(
+            notebook: fileNotebook,
+            backendQueue: backendQueue,
+            dbQueue: dbQueue
+        )
+        //после завершения операции добавляем новую операцию в главную очередь для обновления UI
+        loadNotesOperation.completionBlock = {
+            let updateUI = BlockOperation {
+                self.notes = loadNotesOperation.result
+                self.notesTable.reloadData()
+            }
+            OperationQueue.main.addOperation(updateUI)
+        }
+        commonQueue.addOperation(loadNotesOperation)
+    }
+    
+    private func removeNote(with uid: String, at indexPath: IndexPath) {
+        let removeNoteOperation = RemoveNoteOperation(
+            uid: uid,
+            notebook: fileNotebook,
+            backendQueue: backendQueue,
+            dbQueue: dbQueue
+        )
+        //после завершения операции добавляем новую операцию в главную очередь для обновления UI
+        removeNoteOperation.completionBlock = {
+            let updateUI = BlockOperation {
+                DDLogInfo("Note removed with result \(removeNoteOperation.result ?? false)", level: logLevel)
+                if self.notes != nil {
+                    self.notes?.remove(at: indexPath.row)
+                    self.notesTable.deleteRows(at: [indexPath], with: .automatic)
+                }
+            }
+            OperationQueue.main.addOperation(updateUI)
+        }
+        commonQueue.addOperation(removeNoteOperation)
+    }
 
 }
 
@@ -64,12 +108,12 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fileNotebook.notes.count
+        return notes?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "note", for: indexPath) as! NoteTableViewCell
-        let note = fileNotebook.notes[indexPath.row]
+        guard let note = notes?[indexPath.row] else {return cell}
         if note.color == .white {
             cell.colorView.layer.borderWidth = 1
         }
@@ -88,10 +132,9 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print("Deleted")
-            let uid = fileNotebook.notes[indexPath.row].uid
-            fileNotebook.remove(with: uid)
-            notesTable.deleteRows(at: [indexPath], with: .automatic)
+            if let uid = notes?[indexPath.row].uid {
+                removeNote(with: uid, at: indexPath)
+            }
         }
     }
     

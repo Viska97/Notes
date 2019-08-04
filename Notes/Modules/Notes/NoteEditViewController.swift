@@ -9,6 +9,10 @@ import UIKit
 
 class NoteEditViewController: UIViewController,UITextViewDelegate {
     
+    private let backendQueue = OperationQueue()
+    private let dbQueue = OperationQueue()
+    private let commonQueue = OperationQueue()
+    
     var fileNotebook: FileNotebook? = nil
     var note: Note? = nil
     
@@ -142,14 +146,22 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     }
     
     @objc func save() {
-        if let uid = note?.uid, let title = titleTextView.text, let content = contentTextView.text {
+        if let uid = note?.uid, let title = titleTextView.text, let content = contentTextView.text,
+            let notebook = fileNotebook {
             let updatedNote = Note(uid: uid,
                                    title: title,
                                    content: content,
                                    color: colorSelector.selectedColor,
                                    importance: .normal,
                                    selfDestructDate: date)
-            fileNotebook?.add(updatedNote)
+            //fileNotebook?.add(updatedNote)
+            let saveNoteOperation = SaveNoteOperation(
+                note: updatedNote,
+                notebook: notebook,
+                backendQueue: backendQueue,
+                dbQueue: dbQueue
+            )
+            commonQueue.addOperation(saveNoteOperation)
         }
         navigationController?.popViewController(animated: true)
     }

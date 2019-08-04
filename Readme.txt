@@ -2,7 +2,14 @@
 
 Аналогичное поведение реализовано для экрана выбора цвета: выбранный цвет сохраняется после нажатия на кнопку Done.
 
-Сохранение заметок в файл происходит в функции applicationDidEnterBackground(_ application: UIApplication) в AppDelegate, загрузка из файла - в application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool.  Фото заметки также сохраняются.
+После нажатия на кнопку Done выполняется функция @objc func save() в NoteEditViewController.swift в которой происходит запуск операции SaveNoteOperation.
+
+Загрузка списка заметок происходит в функции loadNotes() в NotesViewController.swift, где запускается операция LoadNotesOperation.
+Удаление заметки проиходит в функции removeNote(with uid: String, at indexPath: IndexPath), где запускается операция RemoveNoteOperation.
+
+Все операции находятся в папке Operations.
+
+Класс для работы с заметками FileNotebook объявлен в AppDelegate, NotesViewController и GalleryViewController получают ссылку на него через UIApplication.shared.delegate и передают в другие контроллеры.
 
 При первом запуске приложения (в случае отсутствия файла с заметками) добавляются предустановленные обычные и фото заметки. Изображения для предустановленных фото заметок находятся в папке DefaulImageNotes.
 
