@@ -30,6 +30,7 @@ class LoadNotesOperation: AsyncOperation {
                 //затем сохраняем все в файл
                 notebook.saveToFile()
                 self.result = notes
+                self.finish()
             case .failure:
                 let loadFromDb = LoadNotesDBOperation(notebook: notebook)
                 loadFromDb.completionBlock = {
