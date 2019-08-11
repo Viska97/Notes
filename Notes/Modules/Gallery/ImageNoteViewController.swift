@@ -9,7 +9,7 @@ import UIKit
 
 class ImageNoteViewController: UIViewController {
     
-    var fileNotebook: FileNotebook? = nil
+    var imageNotebook: ImageNotebook? = nil
     var indexPath: Int = 0
     
     private var imageNotes = [ImageNote]()
@@ -50,10 +50,10 @@ class ImageNoteViewController: UIViewController {
     }
     
     private func setupImageViews() {
-        guard let fileNotebook = fileNotebook else {return}
+        guard let imageNotebook = imageNotebook else {return}
         var count = 3
-        if (fileNotebook.imageNotes.count < 3){
-            count = fileNotebook.imageNotes.count
+        if (imageNotebook.imageNotes.count < 3){
+            count = imageNotebook.imageNotes.count
         }
         (0..<count).forEach {_ in
             let imageView = UIImageView()
@@ -63,7 +63,7 @@ class ImageNoteViewController: UIViewController {
     }
     
     private func setupImages() {
-        guard let fileNotebook = fileNotebook else {return}
+        guard let fileNotebook = imageNotebook else {return}
         var indexes = [Int]()
         if(indexPath == fileNotebook.imageNotes.count-1){
             let start = max(fileNotebook.imageNotes.count-1-indexPath, indexPath-2)
@@ -92,7 +92,7 @@ class ImageNoteViewController: UIViewController {
     }
     
     private var currentPage: Int {
-        let uid = fileNotebook?.imageNotes[indexPath].uid
+        let uid = imageNotebook?.imageNotes[indexPath].uid
         if let page = imageNotes.firstIndex(where: { $0.uid == uid }) {
             return page
         }
@@ -113,17 +113,17 @@ extension ImageNoteViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let fileNotebook = fileNotebook else {return}
+        guard let imageNotebook = imageNotebook else {return}
         if !dragging {
             return
         }
         let offsetX = scrollView.contentOffset.x
         let previousPage = currentPage
         if (offsetX > scrollView.frame.size.width * 1.5) {
-            guard (indexPath < fileNotebook.imageNotes.count-1) else {return}
+            guard (indexPath < imageNotebook.imageNotes.count-1) else {return}
             indexPath = indexPath + 1
-            guard (previousPage == 1 && indexPath < fileNotebook.imageNotes.count-1) else {return}
-            let newImageNote = fileNotebook.imageNotes[indexPath+1]
+            guard (previousPage == 1 && indexPath < imageNotebook.imageNotes.count-1) else {return}
+            let newImageNote = imageNotebook.imageNotes[indexPath+1]
             imageNotes.remove(at: 0)
             imageNotes.append(newImageNote)
             updateImages()
@@ -133,7 +133,7 @@ extension ImageNoteViewController: UIScrollViewDelegate {
             guard (indexPath > 0) else {return}
             indexPath = indexPath - 1
             guard (previousPage == 1 && indexPath > 0) else {return}
-            let newImageNote = fileNotebook.imageNotes[indexPath-1]
+            let newImageNote = imageNotebook.imageNotes[indexPath-1]
             imageNotes.removeLast()
             imageNotes.insert(newImageNote, at: 0)
             updateImages()

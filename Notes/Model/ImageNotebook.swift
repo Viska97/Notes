@@ -1,5 +1,5 @@
 //
-//  FileNotebook.swift
+//  ImageNotebook.swift
 //  Notes
 //
 //  Copyright © 2019 VIS Apps. All rights reserved.
@@ -8,34 +8,28 @@
 import Foundation
 import CocoaLumberjack
 
-public class FileNotebook {
+class ImageNotebook {
     
-    public private(set) var notes = [Note]()
+    public private(set) var imageNotes = [ImageNote]()
     
-    public init(){}
-    
-    public func add(_ note: Note) {
-        if let index = notes.firstIndex(where: { $0.uid == note.uid }) {
+    public func add(_ imageNote: ImageNote) {
+        if let index = imageNotes.firstIndex(where: { $0.uid == imageNote.uid }) {
             //если заметка с таким uid уже существует, заменяем ее по индексу
-            DDLogDebug("Updated note with uid: \(note.uid)")
-            notes[index] = note
+            DDLogDebug("Updated image note with uid: \(imageNote.uid)")
+            imageNotes[index] = imageNote
         }
         else{
             //если не существует, просто добавляем
-            DDLogDebug("Added note with uid: \(note.uid)")
-            notes.append(note)
+            DDLogDebug("Added image note with uid: \(imageNote.uid)")
+            imageNotes.append(imageNote)
         }
     }
     
-    public func replaceNotes(_ newNotes: [Note]) {
-        notes = newNotes
-    }
-    
     public func remove(with uid: String) {
-        if let index = notes.firstIndex(where: { $0.uid == uid }) {
+        if let index = imageNotes.firstIndex(where: { $0.uid == uid }) {
             //находим индекс заметки и удаляем ее по индексу
-            DDLogDebug("Removed note with uid: \(notes[index].uid)")
-            notes.remove(at: index)
+            DDLogDebug("Removed image note with uid: \(imageNotes[index].uid)")
+            imageNotes.remove(at: index)
         }
     }
     
@@ -43,7 +37,7 @@ public class FileNotebook {
         if let directoryUrl = directoryUrl {
             let fileUrl = directoryUrl.appendingPathComponent(fileName)
             var json = [Dictionary<String, Any>]()
-            for note in notes {
+            for note in imageNotes {
                 let dict = note.json
                 json.append(dict)
             }
@@ -56,10 +50,10 @@ public class FileNotebook {
                 }
                 let data = try JSONSerialization.data(withJSONObject: json, options: [])
                 try data.write(to: fileUrl, options: [])
-                DDLogInfo("Notes saved to file", level: logLevel)
+                DDLogInfo("Image notes saved to file", level: logLevel)
             }
             catch {
-                DDLogError("Exception while saving notes to file", level: logLevel)
+                DDLogError("Exception while saving image notes to file", level: logLevel)
             }
         }
     }
@@ -74,32 +68,49 @@ public class FileNotebook {
                     if let json = json as? [Dictionary<String, Any>] {
                         // в требованиях не прописано, следует ли удалять текущие записки(если они есть) перед загрузкой из файла
                         // условимся, что нужно удалять, поэтому пропишем notes.removeAll()
-                        notes.removeAll()
+                        imageNotes.removeAll()
                         for item in json {
-                            if let note = Note.parse(json: item) {
+                            if let note = ImageNote.parse(json: item){
                                 add(note)
                             }
                         }
-                        DDLogInfo("Notes loaded from file", level: logLevel)
+                        DDLogInfo("Image notes loaded from file", level: logLevel)
                     }
                 }
                 else {
-                    DDLogInfo("File not exists. Fill collection with initial notes", level: logLevel)
+                    imageNotes = ImageNotebook.defaultImageNotes()
+                    DDLogInfo("File not exists. Fill collection with initial image notes", level: logLevel)
                 }
             }
             catch {
-                DDLogError("Exception while loading notes from file", level: logLevel)
+                DDLogError("Exception while loading image notes from file", level: logLevel)
             }
         }
     }
     
     //имя файла
-    private let fileName = "notes.json"
+    private let fileName = "imagenotes.json"
     
     //вычисляемое поле для получения пути к папке, где будет сохранен файл
     private var directoryUrl : URL? {
         let cachesDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
         return cachesDirectory?.appendingPathComponent("Files")
+    }
+    
+    private static func defaultImageNotes() -> [ImageNote] {
+        return [
+            ImageNote(name: "Sunrise.png", isDefault: true),
+            ImageNote(name: "SunriseOverMountains.png", isDefault: true),
+            ImageNote(name: "Sparkler.png", isDefault: true),
+            ImageNote(name: "Fireworks.png", isDefault: true),
+            ImageNote(name: "Sunset.png", isDefault: true),
+            ImageNote(name: "CityscapeAtDusk.png", isDefault: true),
+            ImageNote(name: "Cityscape.png", isDefault: true),
+            ImageNote(name: "NightWithStars.png", isDefault: true),
+            ImageNote(name: "MilkyWay.png", isDefault: true),
+            ImageNote(name: "BridgeAtNight.png", isDefault: true),
+            ImageNote(name: "Foggy.png", isDefault: true)
+        ]
     }
     
 }

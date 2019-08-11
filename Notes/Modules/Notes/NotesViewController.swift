@@ -10,17 +10,21 @@ import CocoaLumberjack
 
 class NotesViewController: UIViewController {
     
-    private let backendQueue = OperationQueue()
-    private let dbQueue = OperationQueue()
-    private let commonQueue = OperationQueue()
+    private var backendQueue = OperationQueue()
+    private var dbQueue = OperationQueue()
+    private var commonQueue = OperationQueue()
     
-    private let fileNotebook = (UIApplication.shared.delegate as! AppDelegate).fileNotebook
+    private let fileNotebook = FileNotebook()
+    
+    // копия массива с заметками для отображения их в UI
     private var notes: [Note]? = nil
     
     @IBOutlet weak var notesTable: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //maxConcurrentOperationCount=1 гарантирует что операции будут выполняться последовательно (сначала нам нужно сохранить данные, а только потом обновлять их (если пользователь запросил обновление прямо во время сохранения). Иначе может вначале выполниться задача загрузки, которая вернет нам старые данные
+        commonQueue.maxConcurrentOperationCount = 1
         let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(changeEditMode))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNote))
         navigationItem.leftBarButtonItem = editButton
@@ -28,20 +32,33 @@ class NotesViewController: UIViewController {
         notesTable.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: "note")
         notesTable.rowHeight = UITableView.automaticDimension
         notesTable.estimatedRowHeight = 76.0
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(updateNotes), for: .valueChanged)
+        notesTable.refreshControl = refreshControl
+        //в начале нужен индикатор загрузки, так как данных в списке еще нет и пользователь должен видеть что они загружаются
+        self.notesTable.refreshControl?.beginRefreshing()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        loadNotes()
+        // перед появлением экрана сразу покажем данные в памяти и запустим обновление данных с бекенда
+        // в случае первого запуска данных сразу не будет, но будет индикатор загрузки, информирующий пользователя
+        notes = fileNotebook.notes
+        notesTable.reloadData()
+        updateNotes()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let noteEditViewController = segue.destination as? NoteEditViewController,
             segue.identifier == "ShowNoteEditScreen" {
             noteEditViewController.fileNotebook = fileNotebook
+            noteEditViewController.backendQueue = backendQueue
+            noteEditViewController.dbQueue = dbQueue
+            noteEditViewController.commonQueue = commonQueue
             if let cell = sender as? NoteTableViewCell, let indexPath = notesTable.indexPath(for: cell) {
-                noteEditViewController.note = fileNotebook.notes[indexPath.row]
+                guard let note = notes?[indexPath.row] else {return}
+                noteEditViewController.note = note
             }
             else {
                 noteEditViewController.note = Note(title: "", content: "", importance: .normal)
@@ -57,7 +74,8 @@ class NotesViewController: UIViewController {
         performSegue(withIdentifier: "ShowNoteEditScreen", sender: nil)
     }
     
-    private func loadNotes() {
+    @objc func updateNotes() {
+        checkToken()
         let loadNotesOperation = LoadNotesOperation(
             notebook: fileNotebook,
             backendQueue: backendQueue,
@@ -65,8 +83,10 @@ class NotesViewController: UIViewController {
         )
         //после завершения операции добавляем новую операцию в главную очередь для обновления UI
         loadNotesOperation.completionBlock = {
-            let updateUI = BlockOperation {
+            let updateUI = BlockOperation { [weak self] in
+                guard let self = self else {return}
                 self.notes = loadNotesOperation.result
+                self.notesTable.refreshControl?.endRefreshing()
                 self.notesTable.reloadData()
             }
             OperationQueue.main.addOperation(updateUI)
@@ -74,27 +94,34 @@ class NotesViewController: UIViewController {
         commonQueue.addOperation(loadNotesOperation)
     }
     
-    private func removeNote(with uid: String, at indexPath: IndexPath) {
+    func removeNote(with uid: String) {
+        checkToken()
         let removeNoteOperation = RemoveNoteOperation(
             uid: uid,
             notebook: fileNotebook,
             backendQueue: backendQueue,
             dbQueue: dbQueue
         )
-        //после завершения операции добавляем новую операцию в главную очередь для обновления UI
+        //после завершения операции выводим в лог результат и проводим синхронизацию
         removeNoteOperation.completionBlock = {
-            let updateUI = BlockOperation {
-                DDLogInfo("Note removed with result \(removeNoteOperation.result ?? false)", level: logLevel)
-                if self.notes != nil {
-                    self.notes?.remove(at: indexPath.row)
-                    self.notesTable.deleteRows(at: [indexPath], with: .automatic)
-                }
+            let updateUI = BlockOperation { [weak self] in
+                guard let result = removeNoteOperation.result else {return}
+                DDLogInfo("Note removed with result \(result)", level: logLevel)
+                guard let self = self else {return}
+                self.updateNotes()
             }
             OperationQueue.main.addOperation(updateUI)
         }
         commonQueue.addOperation(removeNoteOperation)
     }
-
+    
+    //если токена нет, показываем экран авторизации
+    func checkToken() {
+        if(UserDefaults.standard.string(forKey: tokenKey) == nil) {
+            performSegue(withIdentifier: "ShowAuthScreen", sender: nil)
+        }
+    }
+    
 }
 
 extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -104,7 +131,7 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        return "Prototype Cells"
+        return "Список заметок"
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,7 +160,10 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if let uid = notes?[indexPath.row].uid {
-                removeNote(with: uid, at: indexPath)
+                //сразу показываем пользователю удаление заметки и запускаем операцию удаления
+                notes?.remove(at: indexPath.row)
+                self.notesTable.deleteRows(at: [indexPath], with: .automatic)
+                removeNote(with: uid)
             }
         }
     }

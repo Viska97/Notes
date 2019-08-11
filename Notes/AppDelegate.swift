@@ -8,6 +8,12 @@
 import UIKit
 import CocoaLumberjack
 
+let client_id = "insert Client ID here"
+let client_secret = "insert Client Secret here"
+
+//имя параметра для хранения токена в UserDefaults
+let tokenKey = "token"
+
 #if DEBUG
 let logLevel = DDLogLevel.debug
 let analytics = false
@@ -23,8 +29,6 @@ let analytics = true
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-    let fileNotebook = FileNotebook()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

@@ -35,6 +35,14 @@
 		FE9C078322F61EFB0060DF38 /* LoadNotesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C078222F61EFB0060DF38 /* LoadNotesOperation.swift */; };
 		FE9C078522F6252B0060DF38 /* RemoveNoteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C078422F6252B0060DF38 /* RemoveNoteOperation.swift */; };
 		FEA4006222D3E34C00488FA8 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA4006122D3E34C00488FA8 /* NoteEditViewController.swift */; };
+		FEA7124222FE2DA60053F16F /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7124122FE2DA60053F16F /* AuthViewController.swift */; };
+		FEA7124422FE33020053F16F /* AuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7124322FE33020053F16F /* AuthorizationRequest.swift */; };
+		FEA7124622FE33B70053F16F /* AuthorizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7124522FE33B70053F16F /* AuthorizationResponse.swift */; };
+		FEA7124822FEC9330053F16F /* Gist.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7124722FEC9330053F16F /* Gist.swift */; };
+		FEA7124A22FEC95E0053F16F /* GistFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7124922FEC95E0053F16F /* GistFile.swift */; };
+		FEA7124C22FEE6F00053F16F /* GistUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7124B22FEE6F00053F16F /* GistUpdateRequest.swift */; };
+		FEA7124E22FEE7760053F16F /* GistFileContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7124D22FEE7760053F16F /* GistFileContent.swift */; };
+		FEA7125022FEF9180053F16F /* ImageNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7124F22FEF9180053F16F /* ImageNotebook.swift */; };
 		FECDA43F22D5F52A0081BB4A /* ColorSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDA43E22D5F52A0081BB4A /* ColorSelectorView.swift */; };
 		FECDA44122D616700081BB4A /* ColorItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDA44022D616700081BB4A /* ColorItemView.swift */; };
 		FECDA44522D9C2560081BB4A /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDA44422D9C2560081BB4A /* ColorPickerView.swift */; };
@@ -96,6 +104,14 @@
 		FE9C078222F61EFB0060DF38 /* LoadNotesOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotesOperation.swift; sourceTree = "<group>"; };
 		FE9C078422F6252B0060DF38 /* RemoveNoteOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNoteOperation.swift; sourceTree = "<group>"; };
 		FEA4006122D3E34C00488FA8 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
+		FEA7124122FE2DA60053F16F /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		FEA7124322FE33020053F16F /* AuthorizationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequest.swift; sourceTree = "<group>"; };
+		FEA7124522FE33B70053F16F /* AuthorizationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationResponse.swift; sourceTree = "<group>"; };
+		FEA7124722FEC9330053F16F /* Gist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gist.swift; sourceTree = "<group>"; };
+		FEA7124922FEC95E0053F16F /* GistFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GistFile.swift; sourceTree = "<group>"; };
+		FEA7124B22FEE6F00053F16F /* GistUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GistUpdateRequest.swift; sourceTree = "<group>"; };
+		FEA7124D22FEE7760053F16F /* GistFileContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GistFileContent.swift; sourceTree = "<group>"; };
+		FEA7124F22FEF9180053F16F /* ImageNotebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNotebook.swift; sourceTree = "<group>"; };
 		FECDA43E22D5F52A0081BB4A /* ColorSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectorView.swift; sourceTree = "<group>"; };
 		FECDA44022D616700081BB4A /* ColorItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorItemView.swift; sourceTree = "<group>"; };
 		FECDA44422D9C2560081BB4A /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
@@ -203,6 +219,13 @@
 				FE8300F522C4E11A0026DDF3 /* NoteExtension.swift */,
 				FE8300F922C4E16F0026DDF3 /* FileNotebook.swift */,
 				FED32FF022DF88A2001D47D2 /* ImageNote.swift */,
+				FEA7124322FE33020053F16F /* AuthorizationRequest.swift */,
+				FEA7124522FE33B70053F16F /* AuthorizationResponse.swift */,
+				FEA7124722FEC9330053F16F /* Gist.swift */,
+				FEA7124922FEC95E0053F16F /* GistFile.swift */,
+				FEA7124B22FEE6F00053F16F /* GistUpdateRequest.swift */,
+				FEA7124D22FEE7760053F16F /* GistFileContent.swift */,
+				FEA7124F22FEF9180053F16F /* ImageNotebook.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -239,6 +262,14 @@
 				FE9C077E22F61D9D0060DF38 /* RemoveNoteDBOperation.swift */,
 			);
 			path = DBOperations;
+			sourceTree = "<group>";
+		};
+		FEA7124022FE2D570053F16F /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				FEA7124122FE2DA60053F16F /* AuthViewController.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		FED32FFE22E0CB83001D47D2 /* Components */ = {
@@ -285,6 +316,7 @@
 		FED3300222E0CC0B001D47D2 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FEA7124022FE2D570053F16F /* Auth */,
 				FED3300322E0CC48001D47D2 /* Gallery */,
 				FED3300122E0CBF6001D47D2 /* Notes */,
 			);
@@ -465,6 +497,7 @@
 			files = (
 				FED32FF622DF8ED3001D47D2 /* NoteCollectionViewCell.swift in Sources */,
 				FE9C077122F619480060DF38 /* BaseBackendOperation.swift in Sources */,
+				FEA7124822FEC9330053F16F /* Gist.swift in Sources */,
 				FEA4006222D3E34C00488FA8 /* NoteEditViewController.swift in Sources */,
 				FED32FF322DF8C5F001D47D2 /* GalleryViewController.swift in Sources */,
 				FE9C076E22F618B90060DF38 /* AsyncOperation.swift in Sources */,
@@ -476,6 +509,7 @@
 				FE9C077322F619B50060DF38 /* SaveNotesBackendOperation.swift in Sources */,
 				FE8300F622C4E11A0026DDF3 /* NoteExtension.swift in Sources */,
 				FE6223DB22C3745100DA0A99 /* AppDelegate.swift in Sources */,
+				FEA7124E22FEE7760053F16F /* GistFileContent.swift in Sources */,
 				FECDA44522D9C2560081BB4A /* ColorPickerView.swift in Sources */,
 				FE8300F422C4E0DD0026DDF3 /* Note.swift in Sources */,
 				FE9C077B22F61BFC0060DF38 /* LoadNotesBackendOperation.swift in Sources */,
@@ -483,15 +517,21 @@
 				FE9C078322F61EFB0060DF38 /* LoadNotesOperation.swift in Sources */,
 				FE31FEFE22DE72E90026D334 /* NoteTableViewCell.swift in Sources */,
 				FECDA44722D9E3870081BB4A /* SelectedColorView.swift in Sources */,
+				FEA7125022FEF9180053F16F /* ImageNotebook.swift in Sources */,
 				FE9C078522F6252B0060DF38 /* RemoveNoteOperation.swift in Sources */,
 				FED32FFD22E05C57001D47D2 /* ImageNoteViewController.swift in Sources */,
+				FEA7124622FE33B70053F16F /* AuthorizationResponse.swift in Sources */,
+				FEA7124222FE2DA60053F16F /* AuthViewController.swift in Sources */,
 				FECDA43F22D5F52A0081BB4A /* ColorSelectorView.swift in Sources */,
+				FEA7124A22FEC95E0053F16F /* GistFile.swift in Sources */,
 				FE74EBA322DDD4040081FE7F /* ColorPickerViewController.swift in Sources */,
 				FE9C077922F61BA30060DF38 /* SaveNoteDBOperation.swift in Sources */,
+				FEA7124C22FEE6F00053F16F /* GistUpdateRequest.swift in Sources */,
 				FECDA44122D616700081BB4A /* ColorItemView.swift in Sources */,
 				FE388D3422DA4E9300D9AA83 /* CGFloatExtension.swift in Sources */,
 				FE9C077722F61A180060DF38 /* BaseDBOperation.swift in Sources */,
 				FE397B4722DA07EA00063CAA /* ColorFieldView.swift in Sources */,
+				FEA7124422FE33020053F16F /* AuthorizationRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

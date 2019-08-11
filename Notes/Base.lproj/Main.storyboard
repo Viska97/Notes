@@ -116,6 +116,114 @@
             </objects>
             <point key="canvasLocation" x="3567" y="384"/>
         </scene>
+        <!--Авторизация через Github-->
+        <scene sceneID="Ibq-OR-gJo">
+            <objects>
+                <viewController title="Авторизация через Github" id="dtS-DT-qVw" customClass="AuthViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yd6-jO-ewS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="knS-5t-3nW">
+                                <rect key="frame" x="32" y="358.5" width="350" height="179"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Логин" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r7P-ph-Fpy">
+                                        <rect key="frame" x="0.0" y="0.0" width="350" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FzY-Qr-5wt">
+                                        <rect key="frame" x="0.0" y="20.5" width="350" height="8"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="8" id="lwB-CW-hKe"/>
+                                        </constraints>
+                                    </view>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tvh-le-NRr">
+                                        <rect key="frame" x="0.0" y="28.5" width="350" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dVg-At-GZe">
+                                        <rect key="frame" x="0.0" y="58.5" width="350" height="16"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="qrV-7X-Ibc"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пароль" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9W-If-j2W">
+                                        <rect key="frame" x="0.0" y="74.5" width="350" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nio-LG-qg3">
+                                        <rect key="frame" x="0.0" y="95" width="350" height="8"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="8" id="S9w-6m-ZVn"/>
+                                        </constraints>
+                                    </view>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZLA-au-iR6">
+                                        <rect key="frame" x="0.0" y="103" width="350" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jkg-af-TqI">
+                                        <rect key="frame" x="0.0" y="133" width="350" height="8"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="8" id="4m4-KG-JF6"/>
+                                        </constraints>
+                                    </view>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Не удалось войти. Проверьте правильность ввода логина/пароля и наличие соединения с интернетом." lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccP-oZ-fJn">
+                                        <rect key="frame" x="0.0" y="141" width="350" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZ3-28-EhD">
+                                        <rect key="frame" x="0.0" y="141" width="350" height="8"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="8" id="YGA-dF-Zah"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlQ-mD-8iK">
+                                        <rect key="frame" x="0.0" y="149" width="350" height="30"/>
+                                        <state key="normal" title="Войти"/>
+                                        <connections>
+                                            <action selector="loginButtonPressed" destination="dtS-DT-qVw" eventType="touchUpInside" id="gSf-Bz-VEo"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="xlQ-mD-8iK" firstAttribute="centerX" secondItem="knS-5t-3nW" secondAttribute="centerX" id="J0i-Mq-sQ7"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="knS-5t-3nW" firstAttribute="leading" secondItem="nrP-BK-Grc" secondAttribute="leading" constant="32" id="G8h-j4-85H"/>
+                            <constraint firstItem="nrP-BK-Grc" firstAttribute="trailing" secondItem="knS-5t-3nW" secondAttribute="trailing" constant="32" id="Tgr-Dv-2dp"/>
+                            <constraint firstItem="knS-5t-3nW" firstAttribute="centerY" secondItem="yd6-jO-ewS" secondAttribute="centerY" id="Vym-91-fHc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nrP-BK-Grc"/>
+                    </view>
+                    <connections>
+                        <outlet property="errorLabel" destination="ccP-oZ-fJn" id="Iye-V7-TvV"/>
+                        <outlet property="loginButton" destination="xlQ-mD-8iK" id="wGS-7F-CSl"/>
+                        <outlet property="loginField" destination="Tvh-le-NRr" id="veq-bl-l2d"/>
+                        <outlet property="passwordField" destination="ZLA-au-iR6" id="h6K-h6-4Cs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HIm-B6-CHX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3567" y="-1008"/>
+        </scene>
         <!--Заметки-->
         <scene sceneID="vrG-hR-Ot5">
             <objects>
@@ -147,6 +255,7 @@
                     <connections>
                         <outlet property="notesTable" destination="kOV-Pw-IQo" id="VEl-nk-KnA"/>
                         <segue destination="8Bd-cV-xUU" kind="show" identifier="ShowNoteEditScreen" id="dL7-fk-Xk7"/>
+                        <segue destination="dtS-DT-qVw" kind="show" identifier="ShowAuthScreen" id="sap-2E-Tsy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pd1-d5-AhZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

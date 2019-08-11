@@ -11,7 +11,7 @@ class RemoveNoteOperation: AsyncOperation {
     private let removeFromDb: RemoveNoteDBOperation
     private let dbQueue: OperationQueue
     
-    private(set) var result: Bool? = false
+    private(set) var result: SaveNotesBackendResult? = nil
     
     init(uid: String,
          notebook: FileNotebook,
@@ -26,12 +26,7 @@ class RemoveNoteOperation: AsyncOperation {
         removeFromDb.completionBlock = {
             let saveToBackend = SaveNotesBackendOperation(notes: notebook.notes)
             saveToBackend.completionBlock = {
-                switch saveToBackend.result! {
-                case .success:
-                    self.result = true
-                case .failure:
-                    self.result = false
-                }
+                self.result = saveToBackend.result
                 self.finish()
             }
             backendQueue.addOperation(saveToBackend)

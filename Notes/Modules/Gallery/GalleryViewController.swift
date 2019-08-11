@@ -16,7 +16,7 @@ class GalleryViewController: UIViewController {
                                              bottom: 12.0,
                                              right: 12.0)
     
-    private let fileNotebook = (UIApplication.shared.delegate as! AppDelegate).fileNotebook
+    private let imageNotebook = ImageNotebook()
     
     private let imagePickerController = UIImagePickerController()
 
@@ -34,6 +34,7 @@ class GalleryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
+        imageNotebook.loadFromFile()
         imageNotesCollection.reloadData()
     }
     
@@ -41,7 +42,7 @@ class GalleryViewController: UIViewController {
         if let imageNoteViewController = segue.destination as? ImageNoteViewController,
             segue.identifier == "ShowImageNoteScreen",
             let indexPath = sender as? IndexPath {
-            imageNoteViewController.fileNotebook = fileNotebook
+            imageNoteViewController.imageNotebook = imageNotebook
             imageNoteViewController.indexPath = indexPath.row
         }
     }
@@ -57,7 +58,8 @@ extension GalleryViewController: UIImagePickerControllerDelegate, UINavigationCo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let url = info[UIImagePickerController.InfoKey.imageURL] as? URL {
             let imageNote = ImageNote(name: url.lastPathComponent)
-            fileNotebook.add(imageNote)
+            imageNotebook.add(imageNote)
+            imageNotebook.saveToFile()
         }
         dismiss(animated: true, completion: nil)
     }
@@ -75,13 +77,13 @@ extension GalleryViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fileNotebook.imageNotes.count
+        return imageNotebook.imageNotes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = imageNotesCollection.dequeueReusableCell(withReuseIdentifier: "imageNote", for: indexPath) as! NoteCollectionViewCell
         cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
-        let note = fileNotebook.imageNotes[indexPath.row]
+        let note = imageNotebook.imageNotes[indexPath.row]
         DispatchQueue.global(qos: .background).async {
             let image = UIImage(contentsOfFile: note.path)
             DispatchQueue.main.async {

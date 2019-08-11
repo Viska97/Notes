@@ -9,9 +9,9 @@ import UIKit
 
 class NoteEditViewController: UIViewController,UITextViewDelegate {
     
-    private let backendQueue = OperationQueue()
-    private let dbQueue = OperationQueue()
-    private let commonQueue = OperationQueue()
+    var backendQueue: OperationQueue? = nil
+    var dbQueue: OperationQueue? = nil
+    var commonQueue: OperationQueue? = nil
     
     var fileNotebook: FileNotebook? = nil
     var note: Note? = nil
@@ -146,24 +146,30 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
     }
     
     @objc func save() {
-        if let uid = note?.uid, let title = titleTextView.text, let content = contentTextView.text,
-            let notebook = fileNotebook {
-            let updatedNote = Note(uid: uid,
-                                   title: title,
-                                   content: content,
-                                   color: colorSelector.selectedColor,
-                                   importance: .normal,
-                                   selfDestructDate: date)
-            //fileNotebook?.add(updatedNote)
-            let saveNoteOperation = SaveNoteOperation(
-                note: updatedNote,
-                notebook: notebook,
-                backendQueue: backendQueue,
-                dbQueue: dbQueue
-            )
-            commonQueue.addOperation(saveNoteOperation)
-        }
-        navigationController?.popViewController(animated: true)
+        guard let uid = note?.uid,
+            let title = titleTextView.text,
+            let content = contentTextView.text,
+            let notebook = fileNotebook,
+            let backendQueue = backendQueue,
+            let dbQueue = dbQueue,
+            let commonQueue = commonQueue else {return}
+        let updatedNote = Note(uid: uid,
+                               title: title,
+                               content: content,color: colorSelector.selectedColor,
+                               importance: .normal,
+                               selfDestructDate: date)
+        let saveNoteOperation = SaveNoteOperation(
+            note: updatedNote,
+            notebook: notebook,
+            backendQueue: backendQueue,
+            dbQueue: dbQueue
+        )
+        // обновляем заметку в памяти и сразу запускаем операцию и не дожидаясь завершения выходим
+        // (заметка в в fileNotebook будет добавлена сразу и будет показана на экране всех заметок,
+        // а заставлять пользователя ждать загрузки в бекенд не нужно, пусть грузится в фоне пока он возвращается на экран всех заметок или просматривает его. maxConcurrentOperationCount=1 гарантирует нам, что если даже пользователь сразу захочет обновить даннные с сервера, то задача загрузки этой заметки выполнится перед тем, как будет выполнена задача обновления)
+        fileNotebook?.add(updatedNote)
+        commonQueue.addOperation(saveNoteOperation)
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func updateUI(_ updatePlaceholder: Bool = false) {

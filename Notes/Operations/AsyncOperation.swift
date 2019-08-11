@@ -43,13 +43,3 @@ class AsyncOperation: Operation {
         didChangeValue(forKey: "isFinished")
     }
 }
-
-//Реализация аналога функции sleep из самостоятельного задания
-func wait(for interval: TimeInterval) {
-    let group = DispatchGroup()
-    group.enter()
-    DispatchQueue.global().asyncAfter(deadline: .now() + interval, execute: {
-        group.leave()
-    })
-    group.wait()
-}

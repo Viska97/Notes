@@ -25,8 +25,8 @@ class LoadNotesOperation: AsyncOperation {
         loadFromBackend.completionBlock = {
             switch self.loadFromBackend.result! {
             case .success(let notes):
-                //добавляем все заметки в notebook. Все заметки с одинаковым uid будут перезаписаны
-                notebook.addAll(notes)
+                //заменяем все заметки на заметки от бекенда (сервер всегда прав)
+                notebook.replaceNotes(notes)
                 //затем сохраняем все в файл
                 notebook.saveToFile()
                 self.result = notes
