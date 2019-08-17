@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import CoreData
 
 class BaseDBOperation: AsyncOperation {
-    let notebook: FileNotebook
+    let backgroundContext: NSManagedObjectContext
     
-    init(notebook: FileNotebook) {
-        self.notebook = notebook
+    init(backgroundContext: NSManagedObjectContext) {
+        self.backgroundContext = backgroundContext
         super.init()
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 class SaveNoteOperation: AsyncOperation {
     private let saveToDb: SaveNoteDBOperation
@@ -14,22 +15,26 @@ class SaveNoteOperation: AsyncOperation {
     private(set) var result: SaveNotesBackendResult? = nil
     
     init(note: Note,
-         notebook: FileNotebook,
+         backgroundContext: NSManagedObjectContext,
          backendQueue: OperationQueue,
          dbQueue: OperationQueue) {
         
-        saveToDb = SaveNoteDBOperation(note: note, notebook: notebook)
+        saveToDb = SaveNoteDBOperation(note: note, backgroundContext: backgroundContext)
         self.dbQueue = dbQueue
         
         super.init()
         
         saveToDb.completionBlock = {
-            let saveToBackend = SaveNotesBackendOperation(notes: notebook.notes)
-            saveToBackend.completionBlock = {
-                self.result = saveToBackend.result
-                self.finish()
+            let loadNotes = LoadNotesDBOperation(backgroundContext: backgroundContext)
+            loadNotes.completionBlock = {
+                let saveToBackend = SaveNotesBackendOperation(notes: loadNotes.result)
+                saveToBackend.completionBlock = {
+                    self.result = saveToBackend.result
+                    self.finish()
+                }
+                backendQueue.addOperation(saveToBackend)
             }
-            backendQueue.addOperation(saveToBackend)
+            dbQueue.addOperation(loadNotes)
         }
     }
     

@@ -21,8 +21,14 @@ class LoadNotesBackendOperation: BaseBackendOperation {
     }
     
     override func main() {
-        DDLogInfo("Loading notes from backend", level: logLevel)
-        loadNotes()
+        if(token != offlineToken){
+            DDLogInfo("Loading notes from backend", level: logLevel)
+            loadNotes()
+        }
+        else{
+            result = .failure(.offlineMode)
+            finish()
+        }
     }
     
     private func loadNotes() {

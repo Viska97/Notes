@@ -8,6 +8,7 @@
 import Foundation
 
 enum NetworkError {
+    case offlineMode
     case unknownError
     case clientError
     case unauthorized

@@ -6,19 +6,30 @@
 //
 
 import Foundation
+import CoreData
 
 class RemoveNoteDBOperation: BaseDBOperation {
     private let uid: String
     
     init(uid: String,
-         notebook: FileNotebook) {
+         backgroundContext: NSManagedObjectContext) {
         self.uid = uid
-        super.init(notebook: notebook)
+        super.init(backgroundContext: backgroundContext)
     }
     
     override func main() {
-        notebook.remove(with: uid)
-        notebook.saveToFile()
+        let request = NSFetchRequest<DBNote>(entityName: "DBNote")
+        request.predicate = NSPredicate(format: "uid = %@", uid)
+        backgroundContext.performAndWait {
+            do {
+                let notes = try backgroundContext.fetch(request)
+                let noteToDelete = notes[0]
+                backgroundContext.delete(noteToDelete)
+                try backgroundContext.save()
+            } catch {
+                print(error)
+            }
+        }
         finish()
     }
 }

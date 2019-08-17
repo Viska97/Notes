@@ -23,6 +23,10 @@
 		FE8300F422C4E0DD0026DDF3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8300F322C4E0DD0026DDF3 /* Note.swift */; };
 		FE8300F622C4E11A0026DDF3 /* NoteExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8300F522C4E11A0026DDF3 /* NoteExtension.swift */; };
 		FE8300FA22C4E16F0026DDF3 /* FileNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8300F922C4E16F0026DDF3 /* FileNotebook.swift */; };
+		FE925AA62308967F00C66375 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FE925AA42308967F00C66375 /* Model.xcdatamodeld */; };
+		FE925AB223089A1F00C66375 /* DBNote+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE925AB123089A1F00C66375 /* DBNote+CoreDataProperties.swift */; };
+		FE925AB82308ACB300C66375 /* OverrideNotesDBOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE925AB72308ACB300C66375 /* OverrideNotesDBOperation.swift */; };
+		FE925ABA2308B6DA00C66375 /* DBNote+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE925AB92308B6DA00C66375 /* DBNote+CoreDataClass.swift */; };
 		FE9C076E22F618B90060DF38 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C076D22F618B90060DF38 /* AsyncOperation.swift */; };
 		FE9C077122F619480060DF38 /* BaseBackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C077022F619480060DF38 /* BaseBackendOperation.swift */; };
 		FE9C077322F619B50060DF38 /* SaveNotesBackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9C077222F619B50060DF38 /* SaveNotesBackendOperation.swift */; };
@@ -92,6 +96,10 @@
 		FE8300F322C4E0DD0026DDF3 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		FE8300F522C4E11A0026DDF3 /* NoteExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteExtension.swift; sourceTree = "<group>"; };
 		FE8300F922C4E16F0026DDF3 /* FileNotebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNotebook.swift; sourceTree = "<group>"; };
+		FE925AA52308967F00C66375 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		FE925AB123089A1F00C66375 /* DBNote+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNote+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FE925AB72308ACB300C66375 /* OverrideNotesDBOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideNotesDBOperation.swift; sourceTree = "<group>"; };
+		FE925AB92308B6DA00C66375 /* DBNote+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNote+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FE9C076D22F618B90060DF38 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		FE9C077022F619480060DF38 /* BaseBackendOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseBackendOperation.swift; sourceTree = "<group>"; };
 		FE9C077222F619B50060DF38 /* SaveNotesBackendOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveNotesBackendOperation.swift; sourceTree = "<group>"; };
@@ -189,6 +197,7 @@
 		FE6223D922C3745100DA0A99 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				FE925AAC2308998000C66375 /* DB */,
 				FE9C076C22F617D10060DF38 /* Operations */,
 				FED32FFE22E0CB83001D47D2 /* Components */,
 				FED3300222E0CC0B001D47D2 /* Modules */,
@@ -199,6 +208,7 @@
 				FED32FFA22DF9D8A001D47D2 /* DefaultImageNotes */,
 				FE6223E122C3745500DA0A99 /* Assets.xcassets */,
 				FE6223E622C3745500DA0A99 /* Info.plist */,
+				FE925AA42308967F00C66375 /* Model.xcdatamodeld */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -228,6 +238,15 @@
 				FEA7124F22FEF9180053F16F /* ImageNotebook.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FE925AAC2308998000C66375 /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				FE925AB123089A1F00C66375 /* DBNote+CoreDataProperties.swift */,
+				FE925AB92308B6DA00C66375 /* DBNote+CoreDataClass.swift */,
+			);
+			path = DB;
 			sourceTree = "<group>";
 		};
 		FE9C076C22F617D10060DF38 /* Operations */ = {
@@ -260,6 +279,7 @@
 				FE9C077822F61BA30060DF38 /* SaveNoteDBOperation.swift */,
 				FE9C077C22F61CE90060DF38 /* LoadNotesDBOperation.swift */,
 				FE9C077E22F61D9D0060DF38 /* RemoveNoteDBOperation.swift */,
+				FE925AB72308ACB300C66375 /* OverrideNotesDBOperation.swift */,
 			);
 			path = DBOperations;
 			sourceTree = "<group>";
@@ -499,6 +519,7 @@
 				FE9C077122F619480060DF38 /* BaseBackendOperation.swift in Sources */,
 				FEA7124822FEC9330053F16F /* Gist.swift in Sources */,
 				FEA4006222D3E34C00488FA8 /* NoteEditViewController.swift in Sources */,
+				FE925ABA2308B6DA00C66375 /* DBNote+CoreDataClass.swift in Sources */,
 				FED32FF322DF8C5F001D47D2 /* GalleryViewController.swift in Sources */,
 				FE9C076E22F618B90060DF38 /* AsyncOperation.swift in Sources */,
 				FE9C077F22F61D9D0060DF38 /* RemoveNoteDBOperation.swift in Sources */,
@@ -511,10 +532,13 @@
 				FE6223DB22C3745100DA0A99 /* AppDelegate.swift in Sources */,
 				FEA7124E22FEE7760053F16F /* GistFileContent.swift in Sources */,
 				FECDA44522D9C2560081BB4A /* ColorPickerView.swift in Sources */,
+				FE925AB223089A1F00C66375 /* DBNote+CoreDataProperties.swift in Sources */,
 				FE8300F422C4E0DD0026DDF3 /* Note.swift in Sources */,
+				FE925AA62308967F00C66375 /* Model.xcdatamodeld in Sources */,
 				FE9C077B22F61BFC0060DF38 /* LoadNotesBackendOperation.swift in Sources */,
 				FE74EBA122DDCB4E0081FE7F /* NotesViewController.swift in Sources */,
 				FE9C078322F61EFB0060DF38 /* LoadNotesOperation.swift in Sources */,
+				FE925AB82308ACB300C66375 /* OverrideNotesDBOperation.swift in Sources */,
 				FE31FEFE22DE72E90026D334 /* NoteTableViewCell.swift in Sources */,
 				FECDA44722D9E3870081BB4A /* SelectedColorView.swift in Sources */,
 				FEA7125022FEF9180053F16F /* ImageNotebook.swift in Sources */,
@@ -914,6 +938,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FE925AA42308967F00C66375 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FE925AA52308967F00C66375 /* Model.xcdatamodel */,
+			);
+			currentVersion = FE925AA52308967F00C66375 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = FE6223CF22C3745000DA0A99 /* Project object */;
 }

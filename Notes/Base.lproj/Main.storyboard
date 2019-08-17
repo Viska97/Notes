@@ -125,7 +125,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="knS-5t-3nW">
-                                <rect key="frame" x="32" y="358.5" width="350" height="179"/>
+                                <rect key="frame" x="32" y="341.5" width="350" height="213"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Логин" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r7P-ph-Fpy">
                                         <rect key="frame" x="0.0" y="0.0" width="350" height="20.5"/>
@@ -197,6 +197,20 @@
                                         <state key="normal" title="Войти"/>
                                         <connections>
                                             <action selector="loginButtonPressed" destination="dtS-DT-qVw" eventType="touchUpInside" id="gSf-Bz-VEo"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HdP-ns-wTa">
+                                        <rect key="frame" x="0.0" y="179" width="350" height="4"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="cth-7w-QYy"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBE-CM-iV0">
+                                        <rect key="frame" x="0.0" y="183" width="350" height="30"/>
+                                        <state key="normal" title="Оффлайн режим"/>
+                                        <connections>
+                                            <action selector="offlineButtonPressed" destination="dtS-DT-qVw" eventType="touchUpInside" id="4hb-eJ-mY1"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 class LoadNotesOperation: AsyncOperation {
     private let loadFromBackend: LoadNotesBackendOperation
@@ -13,7 +14,7 @@ class LoadNotesOperation: AsyncOperation {
     
     private(set) var result: [Note]?
     
-    init(notebook: FileNotebook,
+    init(backgroundContext: NSManagedObjectContext,
          backendQueue: OperationQueue,
          dbQueue: OperationQueue) {
         
@@ -25,14 +26,15 @@ class LoadNotesOperation: AsyncOperation {
         loadFromBackend.completionBlock = {
             switch self.loadFromBackend.result! {
             case .success(let notes):
-                //заменяем все заметки на заметки от бекенда (сервер всегда прав)
-                notebook.replaceNotes(notes)
-                //затем сохраняем все в файл
-                notebook.saveToFile()
-                self.result = notes
-                self.finish()
+                //заменяем все заметки в БД на заметки от бекенда (сервер всегда прав)
+                let overrideDb = OverrideNotesDBOperation(notes: notes, backgroundContext: backgroundContext)
+                overrideDb.completionBlock = {
+                    self.result = notes
+                    self.finish()
+                }
+                dbQueue.addOperation(overrideDb)
             case .failure:
-                let loadFromDb = LoadNotesDBOperation(notebook: notebook)
+                let loadFromDb = LoadNotesDBOperation(backgroundContext: backgroundContext)
                 loadFromDb.completionBlock = {
                     self.result = loadFromDb.result
                     self.finish()

@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import CoreData
 
 class NoteEditViewController: UIViewController,UITextViewDelegate {
     
     var backendQueue: OperationQueue? = nil
     var dbQueue: OperationQueue? = nil
     var commonQueue: OperationQueue? = nil
+    var backgroundContext: NSManagedObjectContext?
     
     var fileNotebook: FileNotebook? = nil
     var note: Note? = nil
@@ -149,7 +151,7 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
         guard let uid = note?.uid,
             let title = titleTextView.text,
             let content = contentTextView.text,
-            let notebook = fileNotebook,
+            let backgroundContext = backgroundContext,
             let backendQueue = backendQueue,
             let dbQueue = dbQueue,
             let commonQueue = commonQueue else {return}
@@ -160,7 +162,7 @@ class NoteEditViewController: UIViewController,UITextViewDelegate {
                                selfDestructDate: date)
         let saveNoteOperation = SaveNoteOperation(
             note: updatedNote,
-            notebook: notebook,
+            backgroundContext: backgroundContext,
             backendQueue: backendQueue,
             dbQueue: dbQueue
         )

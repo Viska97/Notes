@@ -13,6 +13,7 @@ let client_secret = "insert Client Secret here"
 
 //имя параметра для хранения токена в UserDefaults
 let tokenKey = "token"
+let offlineToken = "offline"
 
 #if DEBUG
 let logLevel = DDLogLevel.debug

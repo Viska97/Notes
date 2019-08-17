@@ -18,6 +18,11 @@ class AuthViewController: UIViewController {
         authenticate()
     }
     
+    @IBAction func offlineButtonPressed() {
+        UserDefaults.standard.set(offlineToken, forKey: tokenKey)
+        navigationController?.popViewController(animated: true)
+    }
+    
     override func viewDidLoad() {
         navigationItem.hidesBackButton = true
         tabBarController?.tabBar.isHidden = true

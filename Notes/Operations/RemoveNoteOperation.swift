@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 class RemoveNoteOperation: AsyncOperation {
     private let removeFromDb: RemoveNoteDBOperation
@@ -14,22 +15,26 @@ class RemoveNoteOperation: AsyncOperation {
     private(set) var result: SaveNotesBackendResult? = nil
     
     init(uid: String,
-         notebook: FileNotebook,
+         backgroundContext: NSManagedObjectContext,
          backendQueue: OperationQueue,
          dbQueue: OperationQueue) {
         
-        removeFromDb = RemoveNoteDBOperation(uid: uid, notebook: notebook)
+        removeFromDb = RemoveNoteDBOperation(uid: uid, backgroundContext: backgroundContext)
         self.dbQueue = dbQueue
         
         super.init()
         
         removeFromDb.completionBlock = {
-            let saveToBackend = SaveNotesBackendOperation(notes: notebook.notes)
-            saveToBackend.completionBlock = {
-                self.result = saveToBackend.result
-                self.finish()
+            let loadNotes = LoadNotesDBOperation(backgroundContext: backgroundContext)
+            loadNotes.completionBlock = {
+                let saveToBackend = SaveNotesBackendOperation(notes: loadNotes.result)
+                saveToBackend.completionBlock = {
+                    self.result = saveToBackend.result
+                    self.finish()
+                }
+                backendQueue.addOperation(saveToBackend)
             }
-            backendQueue.addOperation(saveToBackend)
+            dbQueue.addOperation(loadNotes)
         }
     }
     

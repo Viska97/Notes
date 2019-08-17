@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 import CocoaLumberjack
 
 class NotesViewController: UIViewController {
@@ -13,11 +14,13 @@ class NotesViewController: UIViewController {
     private var backendQueue = OperationQueue()
     private var dbQueue = OperationQueue()
     private var commonQueue = OperationQueue()
+    private var backgroundContext: NSManagedObjectContext? {
+        didSet {
+            updateNotes()
+        }
+    }
     
     private let fileNotebook = FileNotebook()
-    
-    // копия массива с заметками для отображения их в UI
-    private var notes: [Note]? = nil
     
     @IBOutlet weak var notesTable: UITableView!
     
@@ -36,7 +39,7 @@ class NotesViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(updateNotes), for: .valueChanged)
         notesTable.refreshControl = refreshControl
         //в начале нужен индикатор загрузки, так как данных в списке еще нет и пользователь должен видеть что они загружаются
-        self.notesTable.refreshControl?.beginRefreshing()
+        createContext()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,21 +47,22 @@ class NotesViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         // перед появлением экрана сразу покажем данные в памяти и запустим обновление данных с бекенда
         // в случае первого запуска данных сразу не будет, но будет индикатор загрузки, информирующий пользователя
-        notes = fileNotebook.notes
         notesTable.reloadData()
+        notesTable.refreshControl?.beginRefreshing()
         updateNotes()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let noteEditViewController = segue.destination as? NoteEditViewController,
+            let backgroundContext = backgroundContext,
             segue.identifier == "ShowNoteEditScreen" {
             noteEditViewController.fileNotebook = fileNotebook
+            noteEditViewController.backgroundContext = backgroundContext
             noteEditViewController.backendQueue = backendQueue
             noteEditViewController.dbQueue = dbQueue
             noteEditViewController.commonQueue = commonQueue
             if let cell = sender as? NoteTableViewCell, let indexPath = notesTable.indexPath(for: cell) {
-                guard let note = notes?[indexPath.row] else {return}
-                noteEditViewController.note = note
+                noteEditViewController.note = fileNotebook.notes[indexPath.row]
             }
             else {
                 noteEditViewController.note = Note(title: "", content: "", importance: .normal)
@@ -75,9 +79,10 @@ class NotesViewController: UIViewController {
     }
     
     @objc func updateNotes() {
+        guard let backgroundContext = backgroundContext else {return}
         checkToken()
         let loadNotesOperation = LoadNotesOperation(
-            notebook: fileNotebook,
+            backgroundContext: backgroundContext,
             backendQueue: backendQueue,
             dbQueue: dbQueue
         )
@@ -85,7 +90,8 @@ class NotesViewController: UIViewController {
         loadNotesOperation.completionBlock = {
             let updateUI = BlockOperation { [weak self] in
                 guard let self = self else {return}
-                self.notes = loadNotesOperation.result
+                guard let notes = loadNotesOperation.result else {return}
+                self.fileNotebook.replaceNotes(notes)
                 self.notesTable.refreshControl?.endRefreshing()
                 self.notesTable.reloadData()
             }
@@ -95,10 +101,11 @@ class NotesViewController: UIViewController {
     }
     
     func removeNote(with uid: String) {
+        guard let backgroundContext = backgroundContext else {return}
         checkToken()
         let removeNoteOperation = RemoveNoteOperation(
             uid: uid,
-            notebook: fileNotebook,
+            backgroundContext: backgroundContext,
             backendQueue: backendQueue,
             dbQueue: dbQueue
         )
@@ -115,10 +122,30 @@ class NotesViewController: UIViewController {
         commonQueue.addOperation(removeNoteOperation)
     }
     
-    //если токена нет, показываем экран авторизации
+    //если токена нет или это оффлайн режим, показываем экран авторизации
     func checkToken() {
-        if(UserDefaults.standard.string(forKey: tokenKey) == nil) {
+        if let token = UserDefaults.standard.string(forKey: tokenKey) {
+            if(token != offlineToken){
+                performSegue(withIdentifier: "ShowAuthScreen", sender: nil)
+            }
+        }
+        else{
             performSegue(withIdentifier: "ShowAuthScreen", sender: nil)
+        }
+    }
+    
+    func createContext() {
+        let container = NSPersistentContainer(name: "Model")
+        container.loadPersistentStores { _, error in
+            guard error == nil else {
+                fatalError("Failed to load store")
+            }
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else {
+                    fatalError("Failed to setup context")
+                }
+                self.backgroundContext = container.newBackgroundContext()
+            }
         }
     }
     
@@ -135,12 +162,12 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notes?.count ?? 0
+        return fileNotebook.notes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "note", for: indexPath) as! NoteTableViewCell
-        guard let note = notes?[indexPath.row] else {return cell}
+        let note = fileNotebook.notes[indexPath.row]
         if note.color == .white {
             cell.colorView.layer.borderWidth = 1
         }
@@ -159,12 +186,11 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if let uid = notes?[indexPath.row].uid {
-                //сразу показываем пользователю удаление заметки и запускаем операцию удаления
-                notes?.remove(at: indexPath.row)
-                self.notesTable.deleteRows(at: [indexPath], with: .automatic)
-                removeNote(with: uid)
-            }
+            let uid = fileNotebook.notes[indexPath.row].uid
+            //сразу показываем пользователю удаление заметки и запускаем операцию удаления
+            fileNotebook.remove(with: uid)
+            self.notesTable.deleteRows(at: [indexPath], with: .automatic)
+            removeNote(with: uid)
         }
     }
     

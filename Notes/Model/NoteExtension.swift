@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 public extension Note {
     
@@ -32,6 +33,27 @@ public extension Note {
         else{
             return nil
         }
+    }
+    
+    static func parse(dbNote: DBNote) -> Note? {
+        guard let uid = dbNote.uid,
+            let title = dbNote.title,
+            let content = dbNote.content else {return nil}
+        var color = UIColor.white
+        if let hexString = dbNote.color {
+            color = self.convertToColor(hexString: hexString)
+        }
+        let importance = Importance(rawValue: dbNote.importance ?? "") ?? Importance.normal
+        var selfDestructDate : Date? = nil
+        if let date = dbNote.selfDestructDate as? Double {
+            selfDestructDate = Date(timeIntervalSince1970: TimeInterval(date))
+        }
+        return Note(uid: uid,
+                    title: title,
+                    content: content,
+                    color: color,
+                    importance: importance,
+                    selfDestructDate: selfDestructDate)
     }
     
     var json: [String: Any] {
@@ -71,7 +93,7 @@ public extension Note {
     }
     
     //вычисляемое поле для получения цвета в виде hex строки
-    private var hexColor : String {
+    var hexColor : String {
         var r:CGFloat = 0
         var g:CGFloat = 0
         var b:CGFloat = 0

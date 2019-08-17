@@ -23,8 +23,14 @@ class SaveNotesBackendOperation: BaseBackendOperation {
     }
     
     override func main() {
-        DDLogInfo("Saving notes to backend", level: logLevel)
-        saveNotes()
+        if(token != offlineToken){
+            DDLogInfo("Saving notes to backend", level: logLevel)
+            saveNotes()
+        }
+        else{
+            result = .failure(.offlineMode)
+            finish()
+        }
     }
     
     private func saveNotes() {
