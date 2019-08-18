@@ -1,4 +1,8 @@
-Для работы приложения с Github API необходимо зарегистрировать OAuth приложение на этой странице: https://github.com/settings/developers (нажать на кнопку New OAuth App). Пример данных для заполнения:
+Для работы приложения в оффлайн режиме необходимо нажать на кнопку "Оффлайн режим" на экране авторизации. Позднее можно будет перейти в онлайн, нажав на кнопку в navigation bar.
+
+Реализована миграция (Model и Model 2, ModelMapping1to2.xcmappingmodel).
+
+Для работы приложения в онлайн режиме с Github API необходимо зарегистрировать OAuth приложение на этой странице: https://github.com/settings/developers (нажать на кнопку New OAuth App). Пример данных для заполнения:
 Application name: iOS Course Notes
 Homepage URL: https://stepik.org/course/53561/syllabus
 Authorization callback URL: ioscoursenotes://host
