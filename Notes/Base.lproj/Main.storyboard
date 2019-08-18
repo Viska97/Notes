@@ -231,6 +231,7 @@
                         <outlet property="errorLabel" destination="ccP-oZ-fJn" id="Iye-V7-TvV"/>
                         <outlet property="loginButton" destination="xlQ-mD-8iK" id="wGS-7F-CSl"/>
                         <outlet property="loginField" destination="Tvh-le-NRr" id="veq-bl-l2d"/>
+                        <outlet property="offlineButton" destination="vBE-CM-iV0" id="rqf-VG-x3u"/>
                         <outlet property="passwordField" destination="ZLA-au-iR6" id="h6K-h6-4Cs"/>
                     </connections>
                 </viewController>

@@ -12,6 +12,7 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var loginField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var offlineButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
     @IBAction func loginButtonPressed() {
@@ -59,10 +60,12 @@ class AuthViewController: UIViewController {
                     guard let self = self else { return }
                     self.errorLabel.isHidden = false
                     self.loginButton.isEnabled = true
+                    self.offlineButton.isEnabled = true
                 }
             }
         }
         self.loginButton.isEnabled = false
+        self.offlineButton.isEnabled = false
         self.errorLabel.isHidden = true
         task.resume()
     }

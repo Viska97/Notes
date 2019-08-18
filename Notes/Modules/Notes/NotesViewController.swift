@@ -22,6 +22,8 @@ class NotesViewController: UIViewController {
     
     private let fileNotebook = FileNotebook()
     
+    private var authorized: Bool = false
+    
     @IBOutlet weak var notesTable: UITableView!
     
     override func viewDidLoad() {
@@ -29,9 +31,8 @@ class NotesViewController: UIViewController {
         //maxConcurrentOperationCount=1 гарантирует что операции будут выполняться последовательно (сначала нам нужно сохранить данные, а только потом обновлять их (если пользователь запросил обновление прямо во время сохранения). Иначе может вначале выполниться задача загрузки, которая вернет нам старые данные
         commonQueue.maxConcurrentOperationCount = 1
         let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(changeEditMode))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNote))
         navigationItem.leftBarButtonItem = editButton
-        navigationItem.rightBarButtonItem = addButton
+        updateNavigationBar()
         notesTable.register(UINib(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: "note")
         notesTable.rowHeight = UITableView.automaticDimension
         notesTable.estimatedRowHeight = 76.0
@@ -125,13 +126,22 @@ class NotesViewController: UIViewController {
     //если токена нет или это оффлайн режим, показываем экран авторизации
     func checkToken() {
         if let token = UserDefaults.standard.string(forKey: tokenKey) {
-            if(token != offlineToken){
-                performSegue(withIdentifier: "ShowAuthScreen", sender: nil)
+            if(token == offlineToken) {
+                authorized = false
+            }
+            else {
+                authorized = true
             }
         }
-        else{
-            performSegue(withIdentifier: "ShowAuthScreen", sender: nil)
+        else {
+            authorized = false
+            requestToken()
         }
+        updateNavigationBar()
+    }
+    
+    @objc func requestToken() {
+        performSegue(withIdentifier: "ShowAuthScreen", sender: nil)
     }
     
     func createContext() {
@@ -147,6 +157,15 @@ class NotesViewController: UIViewController {
                 self.backgroundContext = container.newBackgroundContext()
             }
         }
+    }
+    
+    func updateNavigationBar() {
+        var rightBarButtonItems = [UIBarButtonItem]()
+        rightBarButtonItems.append(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNote)))
+        if(!authorized){
+            rightBarButtonItems.append(UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(requestToken)))
+        }
+        navigationItem.rightBarButtonItems = rightBarButtonItems
     }
     
 }

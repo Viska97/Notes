@@ -11,7 +11,7 @@ struct Gist: Decodable {
     let id: String
     let files: [String:GistFile]
     let createdAt: Date
-    let description: String
+    let description: String?
     let comments: Int
     let commentsUrl: String
 }

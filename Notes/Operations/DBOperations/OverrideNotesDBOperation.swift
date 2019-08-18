@@ -30,6 +30,8 @@ class OverrideNotesDBOperation: BaseDBOperation {
         for note in notes {
             let newNote = DBNote(context: backgroundContext)
             newNote.uid = note.uid
+            newNote.creationDate = Double(Date().timeIntervalSince1970)
+            newNote.author = "anonymous"
             newNote.title = note.title
             newNote.content = note.content
             newNote.color = note.hexColor
