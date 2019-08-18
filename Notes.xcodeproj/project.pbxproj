@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		740A530A7166356C852A3FB1 /* libPods-Notes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2968A166A8ACDDC72393BEB5 /* libPods-Notes.a */; };
 		9DA0670290084DBAD421D91D /* libPods-NotesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 911F4F902E5DD0435231DA37 /* libPods-NotesTests.a */; };
+		FE24C3852309519800EB4EFD /* ModelMapping1to2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = FE24C3842309519800EB4EFD /* ModelMapping1to2.xcmappingmodel */; };
 		FE31FEFE22DE72E90026D334 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE31FEFC22DE72E90026D334 /* NoteTableViewCell.swift */; };
 		FE31FEFF22DE72E90026D334 /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE31FEFD22DE72E90026D334 /* NoteTableViewCell.xib */; };
 		FE388D3422DA4E9300D9AA83 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE388D3322DA4E9300D9AA83 /* CGFloatExtension.swift */; };
@@ -78,6 +79,8 @@
 		852E12BADF0973810FF4CCD3 /* Pods-NotesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotesTests.release.xcconfig"; path = "Target Support Files/Pods-NotesTests/Pods-NotesTests.release.xcconfig"; sourceTree = "<group>"; };
 		911F4F902E5DD0435231DA37 /* libPods-NotesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NotesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D956F4B80BB8ED8DCC268FA5 /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
+		FE24C3832309506300EB4EFD /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
+		FE24C3842309519800EB4EFD /* ModelMapping1to2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = ModelMapping1to2.xcmappingmodel; sourceTree = "<group>"; };
 		FE31FEFC22DE72E90026D334 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		FE31FEFD22DE72E90026D334 /* NoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NoteTableViewCell.xib; path = ../../NoteTableViewCell.xib; sourceTree = "<group>"; };
 		FE388D3322DA4E9300D9AA83 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
@@ -209,6 +212,7 @@
 				FE6223E122C3745500DA0A99 /* Assets.xcassets */,
 				FE6223E622C3745500DA0A99 /* Info.plist */,
 				FE925AA42308967F00C66375 /* Model.xcdatamodeld */,
+				FE24C3842309519800EB4EFD /* ModelMapping1to2.xcmappingmodel */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -543,6 +547,7 @@
 				FECDA44722D9E3870081BB4A /* SelectedColorView.swift in Sources */,
 				FEA7125022FEF9180053F16F /* ImageNotebook.swift in Sources */,
 				FE9C078522F6252B0060DF38 /* RemoveNoteOperation.swift in Sources */,
+				FE24C3852309519800EB4EFD /* ModelMapping1to2.xcmappingmodel in Sources */,
 				FED32FFD22E05C57001D47D2 /* ImageNoteViewController.swift in Sources */,
 				FEA7124622FE33B70053F16F /* AuthorizationResponse.swift in Sources */,
 				FEA7124222FE2DA60053F16F /* AuthViewController.swift in Sources */,
@@ -943,9 +948,10 @@
 		FE925AA42308967F00C66375 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FE24C3832309506300EB4EFD /* Model 2.xcdatamodel */,
 				FE925AA52308967F00C66375 /* Model.xcdatamodel */,
 			);
-			currentVersion = FE925AA52308967F00C66375 /* Model.xcdatamodel */;
+			currentVersion = FE24C3832309506300EB4EFD /* Model 2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

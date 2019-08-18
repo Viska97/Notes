@@ -17,10 +17,11 @@ extension DBNote {
     
     @NSManaged public var color: String?
     @NSManaged public var content: String?
+    @NSManaged public var creationDate: Double
     @NSManaged public var importance: String?
     @NSManaged public var selfDestructDate: NSNumber?
     @NSManaged public var title: String?
     @NSManaged public var uid: String?
-    @NSManaged public var creationDate: Double
+    @NSManaged public var author: String?
     
 }
